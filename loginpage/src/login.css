@@ -1,0 +1,31 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+input {
+    height: 5vh;
+    width: 20vw;
+    border: 1px solid #231616;
+    border-radius: 5px;
+    margin: 10px 10px 10px 10px;
+}
+
+button {
+    height: 5vh;
+    width: 20vw;
+    background-color: rgb(36, 213, 241);
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+}
+
+.loginpage {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
