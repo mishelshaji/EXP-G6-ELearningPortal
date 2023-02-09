@@ -76,9 +76,9 @@ export default function Home() {
     return (
         <div>
             <NavigationBar />
-            <div className="text-center text-white" id='introduction'>
+            <div className="text-center text-white" id='home-introduction'>
                 <p className='display-6'>Grow Your Skills to <br /> Advance Your Career Path</p>
-                <div className="mt-5" id="searchBox">
+                <div className="mt-5" id="search-box">
                     <input onChange={(e) => { setSearchKey(e.target.value) }} type='search' className='form-input p-3' placeholder="Search For..." />
                     <button onClick={searchCourse} className="btn btn-primary ms-2">
                         <i className="fa-solid fa-magnifying-glass"></i>
@@ -103,6 +103,3 @@ export default function Home() {
         </div>
     )
 }
-
-
-

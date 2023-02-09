@@ -1,11 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-}
-
-#introduction {
+#home-introduction {
     background-image: url('../images/cover.jpg');
     background-size: cover;
     background-color: lightblue;
@@ -18,7 +13,7 @@
     flex-direction: column;
 }
 
-#searchBox input {
+#search-box input {
     border: none;
     border-radius: 3px;
     height: 2.3rem;
@@ -30,10 +25,7 @@
         width: 150px;
     }
 
-    #searchBox input {
-        border: none;
-        border-radius: 3px;
-        height: 2.3rem;
+    #search-box input {
         width: 15rem;
     }
 }
