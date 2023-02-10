@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+#home-introduction {
+    background-image: url('../images/cover.jpg');
+    background-size: cover;
+    background-color: lightblue;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik', sans-serif;
+    flex-direction: column;
+}
+
+#search-box input {
+    border: none;
+    border-radius: 3px;
+    height: 2.3rem;
+    width: 20rem;
+}
+
+@media (max-width: 500px) {
+    #logo {
+        width: 150px;
+    }
+
+    #search-box input {
+        width: 15rem;
+    }
+}
