@@ -69,7 +69,6 @@ export default function Home() {
     let navigate = useNavigate();
     
     function searchCourse() {
-        // Write real code here.
         let path = `/course-search/topic`;
         navigate(path);
     }
