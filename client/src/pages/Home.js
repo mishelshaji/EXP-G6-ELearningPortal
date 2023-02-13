@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import CourseCard from '../components/CourseCard';
 import Footer from '../components/Footer';
 import NavigationBar from "../components/NavigationBar";
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
 
@@ -63,15 +66,22 @@ export default function Home() {
         );
     }
 
+    let navigate = useNavigate();
+    
     function searchCourse() {
-        if (searchKey.length !== 0) {
-            // action
-        }
+        let path = `/course-search/topic`;
+        navigate(path);
     }
+
+    const schema = yup.object().shape({
+        searchKey: yup.string().required("Input course name to search!")
+    });
 
     const latestCourses = displayCourses(data);
     const freeCourses = displayCourses(data);
-    const [searchKey, setSearchKey] = useState('');
+    const { handleSubmit, register, formState: { errors } } = useForm({
+        resolver: yupResolver(schema)
+    });
 
     return (
         <div>
@@ -79,10 +89,15 @@ export default function Home() {
             <div className="text-center text-white" id='home-introduction'>
                 <p className='display-6'>Grow Your Skills to <br /> Advance Your Career Path</p>
                 <div className="mt-5" id="search-box">
-                    <input onChange={(e) => { setSearchKey(e.target.value) }} type='search' className='form-input p-3' placeholder="Search For..." />
-                    <button onClick={searchCourse} className="btn btn-primary ms-2">
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                    </button>
+                    <form onSubmit={handleSubmit(searchCourse)}>
+                        <input type='search' className='form-input p-3' placeholder="Search For..." {...register("searchKey")} />
+                        <button type="submit" className="btn btn-primary ms-2">
+                            <i className="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                    {
+                        errors.searchKey ? <small className='me-auto text-danger'>{errors.searchKey.message}</small> : null
+                    }
                 </div>
             </div>
             <div className='bg-light'>
