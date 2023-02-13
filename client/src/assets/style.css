@@ -20,6 +20,42 @@
     width: 20rem;
 }
 
+#registration {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.height-100 {
+    height: 100vh;
+}
+
+#student-registration {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.75), rgba(82, 154, 254, 0.42));
+}
+
+#instructor-registration {
+    padding-bottom: 5px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.75), rgba(82, 154, 254, 0.42));
+}
+
+#student-cover {
+    background-image: linear-gradient(45deg,
+            rgba(255, 255, 255, 0.75),
+            rgba(8, 82, 156, 0.42)),
+        url("../images/registration-cover.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+#instructor-cover {
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.75), rgba(167, 195, 222, 0.42)),
+        url("../images/instructor-registration-cover.jpg");
+    background-position: right;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 @media (max-width: 500px) {
     #logo {
         width: 150px;
