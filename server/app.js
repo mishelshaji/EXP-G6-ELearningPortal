@@ -9,4 +9,5 @@ app.use(express.json());
 app.use('/instructor', instructorRoutes);
 app.use('/admin', adminRoutes);
 app.use('/student', studentRoutes);
+
 app.listen(80);
