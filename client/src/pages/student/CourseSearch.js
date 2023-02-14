@@ -1,10 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import CourseCard from '../../components/CourseCard';
-import NavigationBar from '../../components/NavigationBar';
 import SearchBox from '../../components/SearchBox';
-import Footer from '../../components/Footer';
-
 
 const data = [
   {
@@ -82,14 +79,12 @@ const allCourses = displayAllCourses(data);
 export default function CourseSearch() {
   return (
     <div>
-      <NavigationBar />
       <SearchBox />
       <div className='mt-5 bg-light d-flex justify-content-center'>
         <Row className='g-0 p-4 container'>
           {allCourses}
         </Row>
       </div>
-      <Footer />
     </div>
   )
 }
