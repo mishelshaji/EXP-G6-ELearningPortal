@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "react-bootstrap";
-import NavigationBar from "../../components/student/NavigationBar";
 import Dropdown from "../../components/student/Dropdown";
 
 export default function Order() {
@@ -15,7 +14,6 @@ export default function Order() {
 
   return (
     <div>
-      <NavigationBar />
       <div className="container">
         <div className="row">
           <div className="col-md-6 offset-md-3 mt-5">
@@ -23,7 +21,7 @@ export default function Order() {
               <p className="mb-3">Your Order</p>
               <div className="row mb-3">
                 <div className="col-md-4">
-                  <img src={data.img} alt="" className="img-thumbnail" />
+                  <img src={data.img} alt={data.title} className="img-thumbnail" />
                 </div>
                 <div className="col-md-8">
                   <div>
