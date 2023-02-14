@@ -1,7 +1,5 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import CourseCard from '../components/CourseCard';
-import Footer from '../components/Footer';
-import NavigationBar from "../components/NavigationBar";
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -67,9 +65,9 @@ export default function Home() {
     }
 
     let navigate = useNavigate();
-    
+
     function searchCourse() {
-        let path = `/course-search/topic`;
+        let path = `/search/topic`;
         navigate(path);
     }
 
@@ -85,7 +83,6 @@ export default function Home() {
 
     return (
         <div>
-            <NavigationBar />
             <div className="text-center text-white" id='home-introduction'>
                 <p className='display-6'>Grow Your Skills to <br /> Advance Your Career Path</p>
                 <div className="mt-5" id="search-box">
@@ -114,7 +111,6 @@ export default function Home() {
                     {freeCourses}
                 </Row>
             </Container>
-            <Footer />
         </div>
     )
 }
