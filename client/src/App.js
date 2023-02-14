@@ -1,10 +1,10 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home";
-import InstructorLayout from "./pages/instructor/InstructorLayout";
-import StudentLayout from "./pages/student/StudentLayout";
-import AdminLayout from "./pages/admin/AdminLayout";
-import UserLayout from "./pages/UserLayout";
-import CourseSearch from "./pages/student/CourseSearch";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Home from './pages/Home';
+import InstructorLayout from './pages/instructor/InstructorLayout';
+import StudentLayout from './pages/student/StudentLayout';
+import AdminLayout from './pages/admin/AdminLayout';
+import UserLayout from './pages/UserLayout';
+import CourseSearch from './pages/student/CourseSearch';
 
 const routes = createBrowserRouter([
   {
@@ -23,37 +23,20 @@ const routes = createBrowserRouter([
   },
   {
     path: 'student',
-    element: <StudentLayout />,
-    children: [
-      {
-
-      }
-    ]
+    element: <StudentLayout />
   },
   {
     path: 'instructor',
-    element: <InstructorLayout />,
-    children: [
-      {
-
-      }
-    ]
+    element: <InstructorLayout />
   },
   {
     path: 'admin',
-    element: <AdminLayout />,
-    children: [
-      {
-
-      }
-    ]
+    element: <AdminLayout />
   }
 ]);
 
 function App() {
-  return (
-    <RouterProvider router={routes}></RouterProvider>
-  );
+  return <RouterProvider router={routes}></RouterProvider>;
 }
 
 export default App;
