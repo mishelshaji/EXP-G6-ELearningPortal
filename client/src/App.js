@@ -5,6 +5,7 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
+import StudentProfile from './pages/student/StudentProfile';
 
 const routes = createBrowserRouter([
   {
@@ -23,7 +24,13 @@ const routes = createBrowserRouter([
   },
   {
     path: 'student',
-    element: <StudentLayout />
+    element: <StudentLayout />,
+    children: [
+      {
+        path: 'profile',
+        element: <StudentProfile/>
+      }
+    ]
   },
   {
     path: 'instructor',
