@@ -3,7 +3,6 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
 function CourseRequest() {
-
 	const courses = [
 		{
 			id: '1',
@@ -31,7 +30,7 @@ function CourseRequest() {
 	return (
 		<div className='container'>
 			<p className='mt-3'>Course approval</p>
-			<div className="rounded-5 shadow-lg p-4 mb-4 bg-white">
+			<div className='rounded-5 shadow-lg p-4 mb-4 bg-white'>
 				<Table striped hover responsive >
 					<thead>
 						<tr className="table-info">
@@ -54,10 +53,10 @@ function CourseRequest() {
 								<td>
 									<div className='d-flex'>
 										<Button variant='success me-2'>
-											<i className="fa-solid fa-check" />
+											<i className='fa-solid fa-check' />
 										</Button>
 										<Button variant='danger'>
-											<i class="fa-solid fa-xmark" />
+											<i className='fa-solid fa-xmark' />
 										</Button>
 									</div>
 								</td>
