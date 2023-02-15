@@ -6,6 +6,8 @@ import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
 import Login from "./pages/Login";
+import InstructorDashboard from './pages/instructor/InstructorDashboard';
+import InstructorCourses from './pages/instructor/InstructorCourses.js';
 
 const routes = createBrowserRouter([
   {
@@ -32,7 +34,17 @@ const routes = createBrowserRouter([
   },
   {
     path: 'instructor',
-    element: <InstructorLayout />
+    element: <InstructorLayout />,
+    children: [
+      {
+        path: '',
+        element: <InstructorDashboard/>
+      },
+      {
+        path: 'courses',
+        element: <InstructorCourses/>
+      }
+    ]
   },
   {
     path: 'admin',
