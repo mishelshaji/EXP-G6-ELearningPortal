@@ -11,7 +11,7 @@ const Course = sequelize.define('course', {
     },
 
     title: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(70),
         allowNull: false
     },
 
@@ -26,12 +26,12 @@ const Course = sequelize.define('course', {
     },
 
     price: {
-        type: DataTypes.FLOAT,
+        type: DataTypes.DECIMAL(10, 3),
         allowNull: false
     },
 
     featured_image_link: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(255),
         allowNull: false
     },
 

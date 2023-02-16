@@ -15,7 +15,7 @@ const UserCourseEnrollment = sequelize.define('user_course_enrollment', {
         allowNull: false
     },
 
-    enrollment_status: {
+    status: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0

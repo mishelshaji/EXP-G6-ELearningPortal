@@ -9,7 +9,7 @@ const Otp = sequelize.define('otp', {
         autoIncrement: true
     },
 
-    otp_code: {
+    otp: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
