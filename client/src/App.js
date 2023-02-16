@@ -5,8 +5,9 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import Login from "./pages/Login";
+import Login from './pages/Login';
 import CourseListing from './pages/instructor/CourseList';
+import CourseViewer from './pages/student/CourseViewer';
 
 const routes = createBrowserRouter([
   {
@@ -22,14 +23,20 @@ const routes = createBrowserRouter([
         element: <CourseSearch />
       },
       {
-        path: '/login',
+        path: 'login',
         element: <Login />
       }
     ]
   },
   {
     path: 'student',
-    element: <StudentLayout />
+    element: <StudentLayout />,
+    children: [
+      {
+        path: 'course-view/:q',
+        element: <CourseViewer />
+      }
+    ]
   },
   {
     path: 'instructor',
@@ -37,7 +44,7 @@ const routes = createBrowserRouter([
     children: [
       {
         path: 'courses',
-        element: <CourseListing/>
+        element: <CourseListing />
       }
     ]
   },
