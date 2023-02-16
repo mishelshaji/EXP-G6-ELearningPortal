@@ -10,7 +10,7 @@ export default function NavigationBar() {
   return (
     <Navbar bg="white" expand="lg">
       <Container>
-        <Link to="/student/dashboard">
+        <Link to="/student/">
           <Navbar.Brand>
             <img
               src={Logo}
