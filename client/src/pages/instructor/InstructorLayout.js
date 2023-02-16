@@ -6,20 +6,20 @@ import Header from '../../components/instructor/Header';
 import SideNavigationBar from '../../components/instructor/SideNavigationBar';
 
 function InstructorLayout() {
-  const [showSidebar, setShowSidebar] = useState(false);
+	const [showSidebar, setShowSidebar] = useState(false);
 
-  return (
-    <>
-      <Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-      <Container fluid>
-        <Row id='instructor-dashboard'>
-          <SideNavigationBar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
-          <Outlet></Outlet>
-        </Row>
-      </Container>
-      <Footer />
-    </>
-  );
+	return (
+		<>
+			<Header showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+			<Container fluid>
+				<Row id='instructor-dashboard'>
+					<SideNavigationBar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+					<Outlet></Outlet>
+				</Row>
+			</Container>
+			<Footer />
+		</>
+	);
 }
 
 export default InstructorLayout;
