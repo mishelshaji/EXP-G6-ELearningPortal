@@ -5,7 +5,6 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import StudentProfile from './pages/student/StudentProfile';
 
 const routes = createBrowserRouter([
   {
@@ -19,6 +18,10 @@ const routes = createBrowserRouter([
       {
         path: 'search/:q',
         element: <CourseSearch />
+      },
+      {
+        path: '/login',
+        element: <Login />
       }
     ]
   },
@@ -34,7 +37,13 @@ const routes = createBrowserRouter([
   },
   {
     path: 'instructor',
-    element: <InstructorLayout />
+    element: <InstructorLayout />,
+    children: [
+      {
+        path: 'courses',
+        element: <CourseListing/>
+      }
+    ]
   },
   {
     path: 'admin',
