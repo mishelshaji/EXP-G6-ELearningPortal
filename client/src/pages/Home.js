@@ -75,8 +75,8 @@ export default function Home() {
 
   let navigate = useNavigate();
 
-  function searchCourse() {
-    let path = `/search/topic`;
+  function searchCourse(data) {
+    let path = `/search/${data.searchKey}`;
     navigate(path);
   }
 

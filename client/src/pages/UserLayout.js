@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 function UserLayout() {
   return (
     <>
-      <NavigationBar />
+      <NavigationBar/>
       <Outlet />
       <Footer />
     </>
