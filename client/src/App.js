@@ -64,7 +64,7 @@ const routes = createBrowserRouter([
         path: 'admin',
         element: <AdminLayout />
     }
-]);
+
 
 function App() {
     return <RouterProvider router={routes}></RouterProvider>;
