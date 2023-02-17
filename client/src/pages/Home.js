@@ -75,8 +75,8 @@ export default function Home() {
 
   let navigate = useNavigate();
 
-  function searchCourse() {
-    let path = `/search/topic`;
+  function searchCourse(data) {
+    let path = `/search/${data.searchKey}`;
     navigate(path);
   }
 
@@ -96,7 +96,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className='text-center text-white' id='home-introduction'>
+      <div className='text-center text-white ff-rubik' id='home-introduction'>
         <p className='display-6'>
           Grow Your Skills to <br /> Advance Your Career Path
         </p>

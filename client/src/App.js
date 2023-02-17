@@ -6,54 +6,97 @@ import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
 import Login from "./pages/Login";
-import CourseListing from './pages/instructor/CourseList';
 import CourseCreate from './pages/instructor/CourseCreate';
+import StudentProfile from './pages/student/StudentProfile';
+import UserManagement from './pages/admin/UserManagement';
+import CourseViewer from './pages/student/CourseViewer';
+import StudentRegistration from './pages/student/StudentRegistration';
+import InstructorRegistration from './pages/instructor/InstructorRegistration';
+import EnrolledCourses from './pages/student/EnrolledCourses';
+import Order from './pages/student/Order';
+import StudentProfile from './pages/student/StudentProfile';
+import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
-  {
-    path: '/',
-    element: <UserLayout />,
-    children: [
-      {
-        path: '',
-        element: <Home />
-      },
-      {
-        path: 'search/:q',
-        element: <CourseSearch />
-      },
-      {
-        path: '/login',
-        element: <Login />
-      }
-    ]
-  },
-  {
-    path: 'student',
-    element: <StudentLayout />
-  },
-  {
-    path: 'instructor',
-    element: <InstructorLayout />,
-    children: [
-      {
-        path: 'courses',
-        element: <CourseListing />
-      },
-      {
-        path: 'create',
-        element: <CourseCreate />
-      }
-    ]
-  },
-  {
-    path: 'admin',
-    element: <AdminLayout />
-  }
+    {
+        path: '/',
+        element: <UserLayout />,
+        children: [
+            {
+                path: '',
+                element: <Home />
+            },
+            {
+                path: 'search/:q',
+                element: <CourseSearch />
+            },
+            {
+                path: 'login',
+                element: <Login />
+            },
+            {
+                path: 'student/registration',
+                element: <StudentRegistration />
+            },
+            {
+                path: 'instructor/registration',
+                element: <InstructorRegistration />
+            }
+        ]
+    },
+    {
+        path: 'student',
+        element: <StudentLayout />,
+        children: [
+            {
+                path: '',
+                element: <Home />
+            },
+            {
+                path: 'enrolled-courses',
+                element: <EnrolledCourses />
+            },
+            {
+                path: 'order',
+                element: <Order />
+            },
+            {
+                path: 'profile',
+                element: <StudentProfile />
+            },
+                path: 'course-view/:q',
+                element: <CourseViewer />
+            }
+        ]
+    },
+    {
+        path: 'instructor',
+        element: <InstructorLayout />,
+        children: [
+            {
+                path: 'courses',
+                element: <CourseList />
+            },
+            {
+                path: 'create',
+                element: <CourseCreate />
+            }
+        ]
+    },
+    {
+        path: 'admin',
+        element: <AdminLayout />,
+        children: [
+            {
+                path: 'user-management',
+                element: <UserManagement/>
+            }
+        ]
+    }
 ]);
 
 function App() {
-  return <RouterProvider router={routes}></RouterProvider>;
+    return <RouterProvider router={routes}></RouterProvider>;
 }
 
 export default App;
