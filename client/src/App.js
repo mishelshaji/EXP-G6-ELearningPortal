@@ -6,6 +6,9 @@ import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
 import Login from './pages/Login';
+import StudentProfile from './pages/student/StudentProfile';
+import CourseList from './pages/instructor/CourseList'
+import UserManagement from './pages/admin/UserManagement';
 import CourseViewer from './pages/student/CourseViewer';
 import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
@@ -78,7 +81,13 @@ const routes = createBrowserRouter([
     },
     {
         path: 'admin',
-        element: <AdminLayout />
+        element: <AdminLayout />,
+        children: [
+            {
+                path: 'user-management',
+                element: <UserManagement/>
+            }
+        ]
     }
 ]);
 
