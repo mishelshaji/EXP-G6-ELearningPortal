@@ -33,7 +33,6 @@ function validation(req, res, next) {
             yearOfExperience: joi.number().required(),
             areaOfExpertize: joi.string().required(),
             alternateMobile: joi.string().min(10).max(10)
-
         });
 
         const { error } = instructorRegistrationSchema.validate(req.body, {
