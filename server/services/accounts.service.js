@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Role = require('../models/role');
 const UserRole = require('../models/userRole');
+const UserDetails = require('../models/userDetails');
 const ServiceResponse = require('../utilities/types/service.response');
 
 function convertToJson(arg) {
@@ -59,6 +60,64 @@ const studentRegistration = async (data) => {
 };
 
 /**
+ * Instructor registration service
+ * @param {*} data 
+ */
+const instructorRegistration = async (data) => {
+    const user = 'instructor';
+    const response = new ServiceResponse();
+
+    const isUserAlreadyExist = await User.findOne({
+        where: { email: data.email }
+    });
+
+    if (isUserAlreadyExist) {
+        response.addError('Email', 'User already exist');
+        return response;
+    }
+
+    const hash = bcrypt.hashSync(
+        data.password,
+        parseInt(process.env.SALT_ROUNDS)
+    );
+
+    try {
+        const role = convertToJson(await Role.findOne({
+            where: { role: user }
+        }));
+
+        const createdUser = await User.create({
+            first_name: data.firstName,
+            last_name: data.lastName,
+            phone: data.phone,
+            email: data.email,
+            password: hash
+        });
+
+        await UserDetails.create({
+            education: data.education,
+            date_of_birth: data.dateOfBirth,
+            year_of_experience: data.yearOfExperience,
+            area_of_expertise: data.areaOfExpertise,
+            profile_picture_link: data.profilePictureLink,
+            alternate_mobile: data.alternateMobile,
+            user_id: createdUser.id
+        })
+
+        await UserRole.create({
+            user_id: createdUser.id,
+            role_id: role.id
+        });
+
+        response.result = { status: 'registration success' };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
+}
+
+/**
  * Login service
  * @param {*} data 
  */
@@ -89,5 +148,6 @@ const login = async (data) => {
 
 module.exports = {
     studentRegistrationService: studentRegistration,
+    instructorRegistrationService: instructorRegistration,
     login
 };

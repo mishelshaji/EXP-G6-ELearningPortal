@@ -29,10 +29,11 @@ function validation(req, res, next) {
             phone: joi.string().min(10).max(10),
             password: joi.string().required('Password cannot be empty*'),
             education: joi.string().required(),
-            dateOfBirth: joi.date().greater(new Date('2004-01-01')).required(),
+            dateOfBirth: joi.date().less(new Date('2004-01-01')).required(),
             yearOfExperience: joi.number().required(),
-            areaOfExpertize: joi.string().required(),
-            alternateMobile: joi.string().min(10).max(10)
+            areaOfExpertise: joi.string().required(),
+            alternateMobile: joi.string().min(10).max(10),
+            profilePictureLink: joi.string()
         });
 
         const { error } = instructorRegistrationSchema.validate(req.body, {
