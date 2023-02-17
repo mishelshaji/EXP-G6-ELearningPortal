@@ -10,6 +10,7 @@ import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
+import FeedbackList from './pages/instructor/FeedbackList';
 
 const routes = createBrowserRouter([
     {
@@ -58,13 +59,19 @@ const routes = createBrowserRouter([
     },
     {
         path: 'instructor',
-        element: <InstructorLayout />
+        element: <InstructorLayout />,
+        children: [
+          {
+            path: 'feedback-list',
+            element: <FeedbackList/>
+          }
+        ]
     },
     {
         path: 'admin',
         element: <AdminLayout />
     }
-
+  ])
 
 function App() {
     return <RouterProvider router={routes}></RouterProvider>;
