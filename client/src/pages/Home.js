@@ -96,7 +96,7 @@ export default function Home() {
 
   return (
     <div>
-      <div className='text-center text-white' id='home-introduction'>
+      <div className='text-center text-white ff-rubik' id='home-introduction'>
         <p className='display-6'>
           Grow Your Skills to <br /> Advance Your Career Path
         </p>
