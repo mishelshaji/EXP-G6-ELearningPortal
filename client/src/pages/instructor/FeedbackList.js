@@ -32,12 +32,12 @@ export default function FeedbackList() {
         <div className='fluid'>
             <div className="feedback-main-body p-5">
             <div className='feedback-main '>
-                <div className='feedback-header p-2 rounded mb-4'>
+                <div className='feedback-header p-2 rounded mb-4 bg-light'>
                     <h5>{course.title}</h5>
                     <h6 className='mb-2 text-muted'>{course.level}</h6>
                     <p>{course.discription}</p>
                 </div>
-                    <div className="feedback-body-content p-5 rounded mb-5 ">
+                    <div className="feedback-body-content p-5 rounded mb-5 bg-light">
                     <p className='fs-5'>Students Feedback</p>
                         {feedbacks.map((i) => {
                             return (
@@ -46,7 +46,7 @@ export default function FeedbackList() {
                                         <div>
                                             <p>{i.feedback}</p>
                                             <textarea
-                                            className="text-area col-md-8 offset-md-1"
+                                            className="text-area col-md-8"
                                                 name='reply'
                                                 placeholder='Reply'
                                                 id='reply'

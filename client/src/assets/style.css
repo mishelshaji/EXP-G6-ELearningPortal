@@ -66,17 +66,8 @@
     }
 }
 
-.feedback-header{
-    background-color: white;
- }
- 
- .feedback-body-content{
-     background-color: white;
- }
- 
- .feedback-main-body{
-     height: 100%;
-     width: 100vw;
-     background-image: url('../images/bgimg.jpg');
- }
- 
+.feedback-main-body {
+    height: 100%;
+    width: 100vw;
+    background-image: url('../images/bgimg.jpg');
+}
