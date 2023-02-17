@@ -56,6 +56,13 @@
     background-repeat: no-repeat;
 }
 
+.instructor-profile {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 500px) {
     #logo {
         width: 150px;

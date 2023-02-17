@@ -19,7 +19,7 @@ export default function InstructorProfile() {
             <div className='col-lg-7'>
                 <p className='mb-3 fs-2 p-4 mb-2 '>Profile</p>
             </div>
-            <div style={{ width: '100vw', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className ='instructor-profile'>
                 <div className='d-flex flex-cols  ms-5 col-md-8' >
                     <div className='shadow-lg p-4 rounded col-md- mb-4 mt-4 ms-3'>
                         <div className=" col-md-6 offset-md-3 mb-7 mt-7 ">
