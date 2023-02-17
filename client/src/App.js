@@ -9,7 +9,6 @@ import Login from "./pages/Login";
 import CourseListing from './pages/instructor/CourseList';
 import CourseCreate from './pages/instructor/CourseCreate';
 
-
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -39,11 +38,11 @@ const routes = createBrowserRouter([
     children: [
       {
         path: 'courses',
-        element: <CourseListing/>
+        element: <CourseListing />
       },
       {
         path: 'create',
-        element:<CourseCreate/>
+        element: <CourseCreate />
       }
     ]
   },
