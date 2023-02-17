@@ -6,11 +6,14 @@ import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
 import Login from './pages/Login';
+import CourseViewer from './pages/student/CourseViewer';
 import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
 import InstructorProfile from './pages/instructor/InstructorProfile';
+import StudentProfile from './pages/student/StudentProfile';
+import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
     {
@@ -26,15 +29,15 @@ const routes = createBrowserRouter([
                 element: <CourseSearch />
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <Login />
             },
             {
-                path: '/student/registration',
+                path: 'student/registration',
                 element: <StudentRegistration />
             },
             {
-                path: '/instructor/registration',
+                path: 'instructor/registration',
                 element: <InstructorRegistration />
             }
         ]
@@ -54,6 +57,13 @@ const routes = createBrowserRouter([
             {
                 path: 'order',
                 element: <Order />
+            },
+            {
+                path: 'profile',
+                element: <StudentProfile />
+            },
+                path: 'course-view/:q',
+                element: <CourseViewer />
             }
         ]
     },
@@ -64,6 +74,10 @@ const routes = createBrowserRouter([
             {
                 path: 'profile',
                 element: <InstructorProfile/>
+            },
+            {
+                path: 'courses',
+                element: <CourseList />
             }
         ]
     },
@@ -71,7 +85,7 @@ const routes = createBrowserRouter([
         path: 'admin',
         element: <AdminLayout />
     }
-])
+]);
 
 function App() {
     return <RouterProvider router={routes}></RouterProvider>;
