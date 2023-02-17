@@ -14,6 +14,11 @@ const UserDetails = sequelize.define('user_detail', {
         allowNull: false
     },
 
+    date_of_birth: {
+        type: DataTypes.DATE,
+        allowNull: true
+    },
+
     year_of_experience: {
         type: DataTypes.FLOAT,
         allowNull: false

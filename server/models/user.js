@@ -29,11 +29,6 @@ const User = sequelize.define('user', {
         allowNull: true
     },
 
-    date_of_birth: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
-
     password: {
         type: DataTypes.STRING,
         allowNull: false

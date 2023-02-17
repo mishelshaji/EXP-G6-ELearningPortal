@@ -1,3 +1,4 @@
+require('dotenv').config();
 const sequelize = require('../config/db.config').sequelize;
 
 const Certificate = require('../models/certificate');
