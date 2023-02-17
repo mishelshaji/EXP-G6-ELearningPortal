@@ -10,6 +10,7 @@ import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
+import InstructorProfile from './pages/instructor/InstructorProfile';
 
 const routes = createBrowserRouter([
     {
@@ -58,13 +59,19 @@ const routes = createBrowserRouter([
     },
     {
         path: 'instructor',
-        element: <InstructorLayout />
+        element: <InstructorLayout />,
+        children: [
+            {
+                path: 'profile',
+                element: <InstructorProfile/>
+            }
+        ]
     },
     {
         path: 'admin',
         element: <AdminLayout />
     }
-
+])
 
 function App() {
     return <RouterProvider router={routes}></RouterProvider>;
