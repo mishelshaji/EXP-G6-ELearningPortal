@@ -5,9 +5,9 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import Login from './pages/Login';
+import Login from "./pages/Login";
+import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
-import CourseList from './pages/instructor/CourseList'
 import UserManagement from './pages/admin/UserManagement';
 import CourseViewer from './pages/student/CourseViewer';
 import StudentRegistration from './pages/student/StudentRegistration';
@@ -63,7 +63,7 @@ const routes = createBrowserRouter([
             {
                 path: 'profile',
                 element: <StudentProfile />
-            }
+            },
                 path: 'course-view/:q',
                 element: <CourseViewer />
             }
@@ -76,6 +76,10 @@ const routes = createBrowserRouter([
             {
                 path: 'courses',
                 element: <CourseList />
+            },
+            {
+                path: 'create',
+                element: <CourseCreate />
             }
         ]
     },
