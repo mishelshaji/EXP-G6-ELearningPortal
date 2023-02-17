@@ -11,6 +11,8 @@ import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
+import StudentProfile from './pages/student/StudentProfile';
+import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
     {
@@ -26,15 +28,15 @@ const routes = createBrowserRouter([
                 element: <CourseSearch />
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <Login />
             },
             {
-                path: '/student/registration',
+                path: 'student/registration',
                 element: <StudentRegistration />
             },
             {
-                path: '/instructor/registration',
+                path: 'instructor/registration',
                 element: <InstructorRegistration />
             }
         ]
@@ -56,6 +58,9 @@ const routes = createBrowserRouter([
                 element: <Order />
             },
             {
+                path: 'profile',
+                element: <StudentProfile />
+            }
                 path: 'course-view/:q',
                 element: <CourseViewer />
             }
@@ -63,7 +68,13 @@ const routes = createBrowserRouter([
     },
     {
         path: 'instructor',
-        element: <InstructorLayout />
+        element: <InstructorLayout />,
+        children: [
+            {
+                path: 'courses',
+                element: <CourseList />
+            }
+        ]
     },
     {
         path: 'admin',
