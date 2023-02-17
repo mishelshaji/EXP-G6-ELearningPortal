@@ -17,10 +17,6 @@ const studentRegistration = async (data) => {
     const user = 'student';
     const response = new ServiceResponse();
 
-    const role = convertToJson(await Role.findOne({
-        where: { role: user }
-    }));
-
     const isUserAlreadyExist = await User.findOne({
         where: { email: data.email }
     });
@@ -36,6 +32,10 @@ const studentRegistration = async (data) => {
     );
 
     try {
+        const role = convertToJson(await Role.findOne({
+            where: { role: user }
+        }));
+
         const createdUser = await User.create({
             first_name: data.firstName,
             last_name: data.lastName,
