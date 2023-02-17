@@ -5,7 +5,10 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import Login from './pages/Login';
+import Login from "./pages/Login";
+import CourseCreate from './pages/instructor/CourseCreate';
+import StudentProfile from './pages/student/StudentProfile';
+import UserManagement from './pages/admin/UserManagement';
 import CourseViewer from './pages/student/CourseViewer';
 import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
@@ -13,6 +16,7 @@ import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import InstructorCourses from './pages/instructor/InstructorCourses.js';
+import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
     {
@@ -28,15 +32,15 @@ const routes = createBrowserRouter([
                 element: <CourseSearch />
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <Login />
             },
             {
-                path: '/student/registration',
+                path: 'student/registration',
                 element: <StudentRegistration />
             },
             {
-                path: '/instructor/registration',
+                path: 'instructor/registration',
                 element: <InstructorRegistration />
             }
         ]
@@ -58,6 +62,10 @@ const routes = createBrowserRouter([
                 element: <Order />
             },
             {
+                path: 'profile',
+                element: <StudentProfile />
+            },
+            {
                 path: 'course-view/:q',
                 element: <CourseViewer />
             }
@@ -74,12 +82,26 @@ const routes = createBrowserRouter([
             {
                 path: 'courses',
                 element: <InstructorCourses/>
+            },
+            {
+                path: 'courses',
+                element: <CourseList />
+            },
+            {
+                path: 'create',
+                element: <CourseCreate />
             }
         ]
     },
     {
         path: 'admin',
-        element: <AdminLayout />
+        element: <AdminLayout />,
+        children: [
+            {
+                path: 'user-management',
+                element: <UserManagement/>
+            }
+        ]
     }
 ]);
 
