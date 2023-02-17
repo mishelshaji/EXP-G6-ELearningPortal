@@ -60,6 +60,7 @@ export default function UserManagement() {
             date: '15-12-2021'
         }
     ];
+    
     return (
         <div>
             <div className='container'>
