@@ -7,7 +7,7 @@ function UserLayout() {
   return (
     <>
       <NavigationBar/>
-      <Outlet />
+      <Outlet></Outlet>
       <Footer />
     </>
   );
