@@ -7,6 +7,8 @@ import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
 import Login from "./pages/Login";
 import CourseListing from './pages/instructor/CourseList';
+import CourseCreate from './pages/instructor/CourseCreate';
+
 
 const routes = createBrowserRouter([
   {
@@ -38,6 +40,10 @@ const routes = createBrowserRouter([
       {
         path: 'courses',
         element: <CourseListing/>
+      },
+      {
+        path: 'create',
+        element:<CourseCreate/>
       }
     ]
   },
