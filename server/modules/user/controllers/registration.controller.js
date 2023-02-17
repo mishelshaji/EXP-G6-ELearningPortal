@@ -4,7 +4,11 @@ const studentRegistration = async (req, res) => {
     const data = req.body;
     const result = await service.studentRegistrationService(data);
 
-    res.json(result)
+    if (result.isValid) {
+        res.status(201).json(result);
+    } else {
+        res.status(400).json(result);
+    }
 };
 
 module.exports = {

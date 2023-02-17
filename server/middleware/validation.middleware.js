@@ -20,6 +20,7 @@ function validation(req, res, next) {
             return next();
         }
     }
+
     if (req.url === '/instructor/registration') {
         const instructorRegistrationSchema = joi.object({
             firstName: joi.string().required('First name is required'),
@@ -36,6 +37,23 @@ function validation(req, res, next) {
         });
 
         const { error } = instructorRegistrationSchema.validate(req.body, {
+            abortEarly: false
+        });
+
+        if (error) {
+            return res.status(400).json({ error });
+        } else {
+            return next();
+        }
+    }
+
+    if (req.url === '/login') {
+        const loginValidationSchema = joi.object({
+            email: joi.string().email().required('Email is required'),
+            password: joi.string().required()
+        });
+
+        const { error } = loginValidationSchema.validate(req.body, {
             abortEarly: false
         });
 

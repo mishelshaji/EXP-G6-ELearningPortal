@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Role = require('../models/role');
 const UserRole = require('../models/userRole');
@@ -17,10 +18,6 @@ const studentRegistration = async (data) => {
     const user = 'student';
     const response = new ServiceResponse();
 
-    const role = convertToJson(await Role.findOne({
-        where: { role: user }
-    }));
-
     const isUserAlreadyExist = await User.findOne({
         where: { email: data.email }
     });
@@ -36,6 +33,10 @@ const studentRegistration = async (data) => {
     );
 
     try {
+        const role = convertToJson(await Role.findOne({
+            where: { role: user }
+        }));
+
         const createdUser = await User.create({
             first_name: data.firstName,
             last_name: data.lastName,
@@ -49,7 +50,7 @@ const studentRegistration = async (data) => {
             role_id: role.id
         });
 
-        response.result = { registration: 'success' };
+        response.result = { status: 'registration success' };
         return response;
     } catch (err) {
         response.addError('Database', err);
@@ -57,6 +58,36 @@ const studentRegistration = async (data) => {
     }
 };
 
+/**
+ * Login service
+ * @param {*} data 
+ */
+const login = async (data) => {
+    const response = new ServiceResponse();
+    const user = convertToJson(await User.findOne({
+        where: { email: data.email }
+    }));
+
+    if (user) {
+        const passwordComparison = bcrypt.compare(data.password, user.password);
+
+        if (passwordComparison) {
+            const userRole = convertToJson(await UserRole.findOne({
+                where: { user_id: user.id }
+            }));
+            const token = jwt.sign({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id }, process.env.SECRET_KEY);
+            response.result = { status: 'login success', token };
+            return response;
+        }
+
+        response.addError('Login', 'Invalid email or password');
+        return response;
+    }
+    response.addError('Login', 'User not found');
+    return response;
+}
+
 module.exports = {
-    studentRegistrationService: studentRegistration
+    studentRegistrationService: studentRegistration,
+    login
 };
