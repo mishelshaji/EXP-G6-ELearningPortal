@@ -62,6 +62,7 @@ const routes = createBrowserRouter([
                 path: 'profile',
                 element: <StudentProfile />
             },
+            {
                 path: 'course-view/:q',
                 element: <CourseViewer />
             }
