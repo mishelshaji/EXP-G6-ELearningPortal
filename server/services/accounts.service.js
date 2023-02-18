@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const joi = require('joi');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Role = require('../models/role');
@@ -16,24 +17,41 @@ function convertToJson(arg) {
  * @returns 
  */
 const studentRegistration = async (data) => {
-    const user = 'student';
     const response = new ServiceResponse();
-
-    const isUserAlreadyExist = await User.findOne({
-        where: { email: data.email }
+    const studentRegistrationSchema = joi.object({
+        firstName: joi.string().required('First name is required'),
+        lastName: joi.string().required('Last name is required'),
+        email: joi.string().email().required('Email is mandatory'),
+        phone: joi.string().min(10).max(10).required('Mobile is required'),
+        password: joi.string().required('Password cannot be empty*')
     });
 
-    if (isUserAlreadyExist) {
-        response.addError('Email', 'User already exist');
+    const { error } = studentRegistrationSchema.validate(data, {
+        abortEarly: false
+    });
+
+    if (error) {
+        response.addError('Validation', error);
         return response;
     }
 
-    const hash = bcrypt.hashSync(
-        data.password,
-        parseInt(process.env.SALT_ROUNDS)
-    );
+    const user = 'student';
 
     try {
+        const isUserAlreadyExist = await User.findOne({
+            where: { email: data.email }
+        });
+
+        if (isUserAlreadyExist) {
+            response.addError('Email', 'User already exist');
+            return response;
+        }
+
+        const hash = bcrypt.hashSync(
+            data.password,
+            parseInt(process.env.SALT_ROUNDS)
+        );
+
         const role = convertToJson(await Role.findOne({
             where: { role: user }
         }));
@@ -64,24 +82,47 @@ const studentRegistration = async (data) => {
  * @param {*} data 
  */
 const instructorRegistration = async (data) => {
-    const user = 'instructor';
     const response = new ServiceResponse();
-
-    const isUserAlreadyExist = await User.findOne({
-        where: { email: data.email }
+    const instructorRegistrationSchema = joi.object({
+        firstName: joi.string().required('First name is required'),
+        lastName: joi.string().required('Last name is required'),
+        email: joi.string().email().required('Email is mandatory'),
+        phone: joi.string().min(10).max(10),
+        password: joi.string().required('Password cannot be empty*'),
+        education: joi.string().required(),
+        dateOfBirth: joi.date().less(new Date('2004-01-01')).required(),
+        yearOfExperience: joi.number().required(),
+        areaOfExpertise: joi.string().required(),
+        alternateMobile: joi.string().min(10).max(10),
+        profilePictureLink: joi.string()
     });
 
-    if (isUserAlreadyExist) {
-        response.addError('Email', 'User already exist');
+    const { error } = instructorRegistrationSchema.validate(data, {
+        abortEarly: false
+    });
+
+    if (error) {
+        response.addError('Validation', error);
         return response;
     }
 
-    const hash = bcrypt.hashSync(
-        data.password,
-        parseInt(process.env.SALT_ROUNDS)
-    );
+    const user = 'instructor';
 
     try {
+        const isUserAlreadyExist = await User.findOne({
+            where: { email: data.email }
+        });
+
+        if (isUserAlreadyExist) {
+            response.addError('Email', 'User already exist');
+            return response;
+        }
+
+        const hash = bcrypt.hashSync(
+            data.password,
+            parseInt(process.env.SALT_ROUNDS)
+        );
+
         const role = convertToJson(await Role.findOne({
             where: { role: user }
         }));
@@ -123,27 +164,46 @@ const instructorRegistration = async (data) => {
  */
 const login = async (data) => {
     const response = new ServiceResponse();
-    const user = convertToJson(await User.findOne({
-        where: { email: data.email }
-    }));
+    const loginValidationSchema = joi.object({
+        email: joi.string().email().required('Email is required'),
+        password: joi.string().required()
+    });
 
-    if (user) {
-        const passwordComparison = bcrypt.compare(data.password, user.password);
+    const { error } = loginValidationSchema.validate(data, {
+        abortEarly: false
+    });
 
-        if (passwordComparison) {
-            const userRole = convertToJson(await UserRole.findOne({
-                where: { user_id: user.id }
-            }));
-            const token = jwt.sign({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id }, process.env.SECRET_KEY);
-            response.result = { status: 'login success', token };
-            return response;
-        }
-
-        response.addError('Login', 'Invalid email or password');
+    if (error) {
+        response.addError('Validation', error);
         return response;
     }
-    response.addError('Login', 'User not found');
-    return response;
+
+    try {
+        const user = convertToJson(await User.findOne({
+            where: { email: data.email }
+        }));
+
+        if (user) {
+            const passwordComparison = await bcrypt.compare(data.password, user.password);
+
+            if (passwordComparison) {
+                const userRole = convertToJson(await UserRole.findOne({
+                    where: { user_id: user.id }
+                }));
+                const token = jwt.sign({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id }, process.env.SECRET_KEY);
+                response.result = { status: 'login success', token };
+                return response;
+            }
+
+            response.addError('Login', 'Invalid email or password');
+            return response;
+        }
+        response.addError('Login', 'User not found');
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 module.exports = {
