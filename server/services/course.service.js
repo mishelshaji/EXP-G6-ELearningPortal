@@ -10,7 +10,7 @@ const getAllActive = async () => {
 
     try {
         const allCourses = await Course.findAll({
-            where: { status: 1 }
+            where: { [Op.and]: { status: 1, is_deleted: 0 } }
         });
 
         if (allCourses.length === 0) {
@@ -54,7 +54,7 @@ const getAllFree = async () => {
 
     try {
         const freeCourses = await Course.findAll({
-            where: { [Op.and]: { price: 0, status: 1 } }
+            where: { [Op.and]: { price: 0, status: 1, is_deleted: 0 } }
         });
 
         if (freeCourses.length === 0) {
@@ -97,7 +97,7 @@ const getByNameLike = async (courseName) => {
     try {
         const courseResult = await Course.findAll({
             where: {
-                [Op.and]: { title: { [Op.substring]: courseName }, status: 1 }
+                [Op.and]: { title: { [Op.substring]: courseName }, status: 1, is_deleted: 0 }
             }
         });
 
@@ -120,7 +120,7 @@ const getCourseByUser = async (userId) => {
 
     try {
         const userCourses = await Course.findAll({
-            where: { user_id: userId }
+            where: { [Op.and]: { user_id: userId, is_deleted: 0 } }
         });
 
         if (userCourses.length === 0) {
