@@ -53,7 +53,7 @@ const getAllFree = async () => {
 
     try {
         const freeCourses = await Course.findAll({
-            where: { price: 0 }
+            where: { [Op.and]: { price: 0, status: 1 } }
         });
 
         if (freeCourses.length === 0) {
