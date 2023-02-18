@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
 const joi = require('joi');
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Role = require('../models/role');
 const UserRole = require('../models/userRole');
 const UserDetails = require('../models/userDetails');
 const ServiceResponse = require('../utilities/types/service.response');
+const { createToken } = require('../utilities/jwtHelper');
 
 function convertToJson(arg) {
     return JSON.parse(JSON.stringify(arg));
@@ -186,14 +186,14 @@ const login = async (data) => {
         if (user) {
             const passwordComparison = await bcrypt.compare(data.password, user.password);
 
-            if (passwordComparison) {
-                const userRole = convertToJson(await UserRole.findOne({
-                    where: { user_id: user.id }
-                }));
-                const token = jwt.sign({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id }, process.env.SECRET_KEY);
-                response.result = { status: 'login success', token };
-                return response;
-            }
+        if (passwordComparison) {
+            const userRole = convertToJson(await UserRole.findOne({
+                where: { user_id: user.id }
+            }));
+            const token = createToken({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id });
+            response.result = { status: 'login success', token };
+            return response;
+        }
 
             response.addError('Login', 'Invalid email or password');
             return response;
