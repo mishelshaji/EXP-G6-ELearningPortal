@@ -5,7 +5,7 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import Login from "./pages/Login";
+import Login from './pages/Login';
 import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
 import UserManagement from './pages/admin/UserManagement';
@@ -15,6 +15,7 @@ import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
+import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
@@ -77,6 +78,10 @@ const routes = createBrowserRouter([
             {
                 path: '',
                 element: <InstructorDashboard />
+            },
+            {
+                path: 'feedback-list',
+                element: <FeedbackList />
             },
             {
                 path: 'courses',
