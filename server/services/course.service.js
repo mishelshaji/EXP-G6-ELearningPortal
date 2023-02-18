@@ -4,11 +4,35 @@ const Course = require('../models/course');
 const CourseViewDTO = require('../dtos/course-view.dto');
 const ServiceResponse = require('../utilities/types/service.response');
 
-const getAll = async () => {
+const getAllActive = async () => {
     const response = new ServiceResponse();
 
     try {
-        const allCourses = await Course.findAll();
+        const allCourses = await Course.findAll({
+            where: { status: 1 }
+        });
+
+        if (allCourses.length === 0) {
+            response.result = null;
+            return response;
+        }
+
+        const courses = generateCourseViewDto(allCourses);
+        response.result = { courses };
+        return response;
+    } catch (error) {
+        response.addError('Database', err);
+        return response;
+    }
+}
+
+const getAllInActive = async () => {
+    const response = new ServiceResponse();
+
+    try {
+        const allCourses = await Course.findAll({
+            where: { status: 0 }
+        });
 
         if (allCourses.length === 0) {
             response.result = null;
@@ -145,7 +169,8 @@ function generateCourseViewDto(array) {
 }
 
 module.exports = {
-    getAll,
+    getAllActive,
+    getAllInActive,
     getAllFree,
     getOne,
     getByNameLike,
