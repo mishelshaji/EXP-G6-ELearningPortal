@@ -1,4 +1,5 @@
 const Sequelize = require("sequelize");
+const joi = require('joi');
 const Op = Sequelize.Op;
 const Course = require('../models/course');
 const CourseViewDTO = require('../dtos/course-view.dto');
@@ -136,8 +137,49 @@ const getCourseByUser = async (userId) => {
     }
 }
 
-const create = async () => {
+const create = async (courseCreateDto) => {
+    const response = new ServiceResponse();
+    const courseSchema = joi.object({
+        title: joi.string().required(),
+        metaDescription: joi.string().required(),
+        level: joi.number().required(),
+        price: joi.number().required(),
+        featuredImageLink: joi.string().required(),
+        language: joi.string().required(),
+        detailedDescription: joi.string().required(),
+        userId: joi.number().integer().positive().required(),
+        categoryId: joi.number().integer().positive().required()
+    });
 
+    const { error } = courseSchema.validate(courseCreateDto, {
+        abortEarly: false
+    });
+
+    if (error) {
+        response.addError('Validation', error);
+        return response;
+    }
+
+    try {
+        const createdCourse = await Course.create({
+            title: courseCreateDto.title,
+            meta_description: courseCreateDto.metaDescription,
+            level: courseCreateDto.level,
+            price: courseCreateDto.price,
+            featured_image_link: courseCreateDto.featuredImageLink,
+            language: courseCreateDto.language,
+            detailed_description: courseCreateDto.detailedDescription,
+            user_id: courseCreateDto.userId,
+            category_id: courseCreateDto.categoryId
+        });
+
+        const course = generateCourseViewDto([createdCourse]);
+        response.result = { course };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 const update = async () => {
