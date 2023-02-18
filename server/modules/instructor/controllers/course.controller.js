@@ -1,4 +1,5 @@
 const CourseCreateDTO = require('../../../dtos/course-create.dto');
+const CourseUpdateDTO = require('../../../dtos/course-update.dto');
 const service = require('../../../services/course.service');
 
 const getAll = async (req, res) => {
@@ -48,7 +49,21 @@ const create = async (req, res) => {
 }
 
 const update = async (req, res) => {
+    const courseId = req.params.id;
+    const courseDto = new CourseUpdateDTO();
+    courseDto.title = req.body.title;
+    courseDto.metaDescription = req.body.metaDescription;
+    courseDto.level = req.body.level;
+    courseDto.detailedDescription = req.body.detailedDescription;
+    const result = await service.update(courseId, courseDto);
 
+    if (result.result) {
+        return res.status(200).json(result.result.courseUpdateStatus);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
 }
 
 const remove = async (req, res) => [

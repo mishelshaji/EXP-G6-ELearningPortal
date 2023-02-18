@@ -182,11 +182,61 @@ const create = async (courseCreateDto) => {
     }
 }
 
-const update = async () => {
+const update = async (courseId, courseUpdateDto) => {
+    const response = new ServiceResponse();
+    const courseSchema = joi.object({
+        title: joi.string().required(),
+        metaDescription: joi.string().required(),
+        level: joi.number().required(),
+        detailedDescription: joi.string().required(),
+    });
 
+    const { error } = courseSchema.validate(courseUpdateDto, {
+        abortEarly: false
+    });
+
+    if (error) {
+        response.addError('Validation', error);
+        return response;
+    }
+
+    try {
+        const isCourseExist = await Course.findByPk(courseId);
+
+        if (!isCourseExist) {
+            response.addError('Course', 'Course not found');
+            return response;
+        }
+
+        const courseUpdate = await Course.update({
+            title: courseUpdateDto.title,
+            meta_description: courseUpdateDto.metaDescription,
+            level: courseUpdateDto.level,
+            detailed_description: courseUpdateDto.detailedDescription
+        }, {
+            where: {
+                id: courseId
+            }
+        });
+        console.log(courseUpdate[0]);
+
+        response.result = { courseUpdateStatus: courseUpdate[0] };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 const remove = async () => {
+
+}
+
+const updateStatus = async () => {
+
+}
+
+const setPrice = async () => {
 
 }
 
