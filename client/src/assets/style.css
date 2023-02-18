@@ -76,3 +76,9 @@
         width: 15rem;
     }
 }
+
+.feedback-main-body {
+    height: 100%;
+    width: 100vw;
+    background-image: url('../images/bgimg.jpg');
+}
