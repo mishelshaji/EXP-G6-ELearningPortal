@@ -6,9 +6,14 @@ const getAll = async () => {
     const response = new ServiceResponse();
 
     try {
-        const result = await Course.findAll();
+        const allCourses = await Course.findAll();
 
-        const courses = result.map((course) => {
+        if (!allCourses) {
+            response.result =  null;
+            return response;
+        }
+
+        const courses = allCourses.map((course) => {
             const dto = new CourseViewDTO();
             dto.id = course.id;
             dto.title = course.title;
@@ -32,11 +37,16 @@ const getAllFree = async () => {
     const response = new ServiceResponse();
 
     try {
-        const result = await Course.findAll({
+        const freeCourses = await Course.findAll({
             where: { price: 0 }
         });
 
-        const courses = result.map((course) => {
+        if (!freeCourses) {
+            response.result =  null;
+            return response;
+        }
+
+        const courses = freeCourses.map((course) => {
             const dto = new CourseViewDTO();
             dto.id = course.id;
             dto.title = course.title;
@@ -56,8 +66,32 @@ const getAllFree = async () => {
     }
 }
 
-const getOne = async () => {
+const getOne = async (id) => {
+    const response = new ServiceResponse();
 
+    try {
+        const course = await Course.findByPk(id);
+
+        if (!course) {
+            response.result =  null;
+            return response;
+        }
+
+        const dto = new CourseViewDTO();
+        dto.id = course.id;
+        dto.title = course.title;
+        dto.metaDescription = course.meta_description;
+        dto.level = course.level;
+        dto.price = course.price;
+        dto.featuredImageLink = course.featured_image_link;
+        dto.language = course.language;
+        dto.detailedDescription = course.detailed_description;
+        response.result = { course: dto };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 const getByNameLike = async () => {

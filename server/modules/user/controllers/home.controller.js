@@ -2,22 +2,36 @@ const service = require('../../../services/course.service');
 
 const getAll = async (req, res) => {
     const result = await service.getAll();
-    if (result.isValid) {
-        return res.status(200).json(result);
+    if (result.result) {
+        return res.status(200).json(result.result.courses);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
     }
-    return res.status(400).json(result);
 }
 
 const getAllFree = async (req, res) => {
     const result = await service.getAllFree();
-    if (result.isValid) {
-        return res.status(200).json(result);
+    if (result.result) {
+        return res.status(200).json(result.result.courses);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
     }
-    return res.status(400).json(result);
 }
 
 const getOne = async (req, res) => {
-
+    const courseId = req.params.id;
+    const result = await service.getOne(courseId);
+    if (result.result) {
+        return res.status(200).json(result.result.course);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
 }
 
 const getByNameLike = async (req, res) => {
