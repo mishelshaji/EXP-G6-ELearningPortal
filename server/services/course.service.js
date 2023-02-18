@@ -96,9 +96,7 @@ const getByNameLike = async (courseName) => {
     try {
         const courseResult = await Course.findAll({
             where: {
-                title: {
-                    [Op.substring]: courseName,
-                }
+                [Op.and]: { title: { [Op.substring]: courseName }, status: 1 }
             }
         });
 
