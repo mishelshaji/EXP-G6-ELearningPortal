@@ -11,7 +11,6 @@ module.exports = {
                 last_name: null,
                 email: 'admin@mail.com',
                 phone: null,
-                date_of_birth: null,
                 password: hash,
                 createdAt: new Date(),
                 updatedAt: new Date()
