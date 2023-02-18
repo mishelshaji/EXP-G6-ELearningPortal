@@ -66,9 +66,18 @@ const update = async (req, res) => {
     }
 }
 
-const remove = async (req, res) => [
+const remove = async (req, res) => {
+    const courseId = req.params.id;
+    const result = await service.remove(courseId);
 
-]
+    if (result.result) {
+        return res.status(200).json(result.result.courseDeletionStatus);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
+}
 
 module.exports = {
     getAll,

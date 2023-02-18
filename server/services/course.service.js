@@ -218,7 +218,6 @@ const update = async (courseId, courseUpdateDto) => {
                 id: courseId
             }
         });
-        console.log(courseUpdate[0]);
 
         response.result = { courseUpdateStatus: courseUpdate[0] };
         return response;
@@ -228,8 +227,25 @@ const update = async (courseId, courseUpdateDto) => {
     }
 }
 
-const remove = async () => {
+const remove = async (courseId) => {
+    const response = new ServiceResponse();
 
+    try {
+        const course = await Course.findByPk(courseId);
+
+        if (!course) {
+            response.addError('Course', 'Course not found');
+            return response;
+        }
+
+        const courseDelete = await Course.update({ is_deleted: 1 }, { where: { id: courseId } })
+
+        response.result = { courseDeletionStatus: courseDelete[0] };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 const updateStatus = async () => {
