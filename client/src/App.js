@@ -7,48 +7,55 @@ import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
 import Login from "./pages/Login";
 import CourseListing from './pages/instructor/CourseList';
+import ViewCourseDetails from './pages/student/CourseView';
 
 const routes = createBrowserRouter([
-  {
-    path: '/',
-    element: <UserLayout />,
-    children: [
-      {
-        path: '',
-        element: <Home />
-      },
-      {
-        path: 'search/:q',
-        element: <CourseSearch />
-      },
-      {
-        path: '/login',
-        element: <Login />
-      }
-    ]
-  },
-  {
-    path: 'student',
-    element: <StudentLayout />
-  },
-  {
-    path: 'instructor',
-    element: <InstructorLayout />,
-    children: [
-      {
-        path: 'courses',
-        element: <CourseListing/>
-      }
-    ]
-  },
-  {
-    path: 'admin',
-    element: <AdminLayout />
-  }
+    {
+        path: '/',
+        element: <UserLayout />,
+        children: [
+            {
+                path: '',
+                element: <Home />
+            },
+            {
+                path: 'search/:q',
+                element: <CourseSearch />
+            },
+            {
+                path: '/login',
+                element: <Login />
+            }
+        ]
+    },
+    {
+        path: 'student',
+        element: <StudentLayout />,
+        children: [
+            {
+                path: 'courses',
+                element: <ViewCourseDetails />
+            }
+        ]
+    },
+    {
+        path: 'instructor',
+        element: <InstructorLayout />,
+        children: [
+            {
+                path: 'courses',
+                element: <CourseListing />
+            }
+        ]
+    },
+    {
+        path: 'admin',
+        element: <AdminLayout />
+    }
 ]);
 
 function App() {
-  return <RouterProvider router={routes}></RouterProvider>;
+    return <RouterProvider router={routes}></RouterProvider>;
 }
 
 export default App;
