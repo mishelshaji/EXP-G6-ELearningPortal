@@ -15,7 +15,6 @@ import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
-import InstructorCourses from './pages/instructor/InstructorCourses.js';
 import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
@@ -77,11 +76,7 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <InstructorDashboard/>
-            },
-            {
-                path: 'courses',
-                element: <InstructorCourses/>
+                element: <InstructorDashboard />
             },
             {
                 path: 'courses',
@@ -99,7 +94,7 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: 'user-management',
-                element: <UserManagement/>
+                element: <UserManagement />
             }
         ]
     }
