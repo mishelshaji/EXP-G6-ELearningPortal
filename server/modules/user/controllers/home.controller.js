@@ -35,7 +35,15 @@ const getOne = async (req, res) => {
 }
 
 const getByNameLike = async (req, res) => {
-
+    const courseName = req.params.q;
+    const result = await service.getByNameLike(courseName);
+    if (result.result) {
+        return res.status(200).json(result.result.courses);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
 }
 
 module.exports = {

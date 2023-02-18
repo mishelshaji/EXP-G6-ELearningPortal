@@ -1,3 +1,5 @@
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 const Course = require('../models/course');
 const CourseViewDTO = require('../dtos/course-view.dto');
 const ServiceResponse = require('../utilities/types/service.response');
@@ -8,8 +10,8 @@ const getAll = async () => {
     try {
         const allCourses = await Course.findAll();
 
-        if (!allCourses) {
-            response.result =  null;
+        if (allCourses.length === 0) {
+            response.result = null;
             return response;
         }
 
@@ -41,8 +43,8 @@ const getAllFree = async () => {
             where: { price: 0 }
         });
 
-        if (!freeCourses) {
-            response.result =  null;
+        if (freeCourses.length === 0) {
+            response.result = null;
             return response;
         }
 
@@ -73,7 +75,7 @@ const getOne = async (id) => {
         const course = await Course.findByPk(id);
 
         if (!course) {
-            response.result =  null;
+            response.result = null;
             return response;
         }
 
@@ -94,8 +96,41 @@ const getOne = async (id) => {
     }
 }
 
-const getByNameLike = async () => {
+const getByNameLike = async (courseName) => {
+    const response = new ServiceResponse();
 
+    try {
+        const courseResult = await Course.findAll({
+            where: {
+                title: {
+                    [Op.substring]: courseName,
+                }
+            }
+        });
+
+        if (courseResult.length === 0) {
+            response.result = null;
+            return response;
+        }
+
+        const courses = courseResult.map((course) => {
+            const dto = new CourseViewDTO();
+            dto.id = course.id;
+            dto.title = course.title;
+            dto.metaDescription = course.meta_description;
+            dto.level = course.level;
+            dto.price = course.price;
+            dto.featuredImageLink = course.featured_image_link;
+            dto.language = course.language;
+            dto.detailedDescription = course.detailed_description;
+            return dto;
+        });
+        response.result = { courses };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 const create = async () => {

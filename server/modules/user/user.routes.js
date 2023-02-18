@@ -12,6 +12,6 @@ router.post('/login', loginController.login);
 router.get('/courses', homeController.getAll);
 router.get('/courses/free', homeController.getAllFree);
 router.get('/courses/:id', homeController.getOne);
-router.get('/courses/:q', homeController.getByNameLike);
+router.get('/courses/search/:q', homeController.getByNameLike);
 
 module.exports = router;
