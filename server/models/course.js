@@ -21,7 +21,7 @@ const Course = sequelize.define('course', {
     },
 
     level: {
-        type: DataTypes.STRING(15),
+        type: DataTypes.INTEGER,
         allowNull: false
     },
 
