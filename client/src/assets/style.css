@@ -67,6 +67,11 @@
     background-repeat: no-repeat;
 }
 
+#instructor-dashboard {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.75), rgba(167, 195, 222, 0.42));
+    font-family: 'Rubik', sans-serif;
+}
+
 @media (max-width: 500px) {
     #logo {
         width: 150px;
