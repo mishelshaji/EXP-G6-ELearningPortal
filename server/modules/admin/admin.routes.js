@@ -1,7 +1,10 @@
 const express = require('express');
-const userController = require('./controllers/user.controller');
+const courseController = require('./controllers/course.controller');
 
 const router = express.Router();
+
+router.put('/courses/status/:id', courseController.updateStatus);
+router.put('/courses/price/:id', courseController.updatePrice);
 
 router.get('/users', userController.getAll);
 router.get('/users/:id', userController.getOne);

@@ -5,12 +5,21 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
+import ViewCourseDetails from './pages/student/CourseView';
 import Login from './pages/Login';
+import CourseCreate from './pages/instructor/CourseCreate';
+import StudentProfile from './pages/student/StudentProfile';
+import UserManagement from './pages/admin/UserManagement';
 import CourseViewer from './pages/student/CourseViewer';
 import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
+import InstructorProfile from './pages/instructor/InstructorProfile';
+import InstructorDashboard from './pages/instructor/InstructorDashboard';
+import FeedbackList from './pages/instructor/FeedbackList';
+import CourseList from './pages/instructor/CourseList';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 const routes = createBrowserRouter([
     {
@@ -26,15 +35,15 @@ const routes = createBrowserRouter([
                 element: <CourseSearch />
             },
             {
-                path: '/login',
+                path: 'login',
                 element: <Login />
             },
             {
-                path: '/student/registration',
+                path: 'student/registration',
                 element: <StudentRegistration />
             },
             {
-                path: '/instructor/registration',
+                path: 'instructor/registration',
                 element: <InstructorRegistration />
             }
         ]
@@ -56,18 +65,58 @@ const routes = createBrowserRouter([
                 element: <Order />
             },
             {
+                path: 'profile',
+                element: <StudentProfile />
+            },
+            {
                 path: 'course-view/:q',
                 element: <CourseViewer />
+            },
+            {
+                path: 'courses',
+                element: <ViewCourseDetails />
             }
         ]
     },
     {
         path: 'instructor',
-        element: <InstructorLayout />
+        element: <InstructorLayout />,
+        children: [
+            {
+                path: '',
+                element: <InstructorDashboard />
+            },
+            {
+                path: 'profile',
+                element: <InstructorProfile/>
+            },
+            {
+                path: 'feedback-list',
+                element: <FeedbackList />
+            },
+            {
+                path: 'courses',
+                element: <CourseList />
+            },
+            {
+                path: 'create',
+                element: <CourseCreate />
+            }
+        ]
     },
     {
         path: 'admin',
-        element: <AdminLayout />
+        element: <AdminLayout />,
+        children: [
+            {
+                path: '',
+                element: <AdminDashboard />
+            },
+            {
+                path: 'user-management',
+                element: <UserManagement />
+            }
+        ]
     }
 ]);
 

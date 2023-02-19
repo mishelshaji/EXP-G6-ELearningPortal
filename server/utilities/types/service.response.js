@@ -4,7 +4,7 @@ class ServiceResponse {
     isValid = true;
 
     constructor() {
-        this.errors = {};
+        this.errors = {}
     }
 
     addError(key, value) {
