@@ -1,7 +1,7 @@
 const service = require('../../../services/course.service');
 
 const getAll = async (req, res) => {
-    const result = await service.getAll();
+    const result = await service.getAllActive();
     if (result.result) {
         return res.status(200).json(result.result.courses);
     } else if (!result.isValid) {

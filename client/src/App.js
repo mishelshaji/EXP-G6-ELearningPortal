@@ -5,6 +5,7 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
+import ViewCourseDetails from './pages/student/CourseView';
 import Login from './pages/Login';
 import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
@@ -14,8 +15,11 @@ import StudentRegistration from './pages/student/StudentRegistration';
 import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
+import InstructorProfile from './pages/instructor/InstructorProfile';
+import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 const routes = createBrowserRouter([
     {
@@ -67,6 +71,10 @@ const routes = createBrowserRouter([
             {
                 path: 'course-view/:q',
                 element: <CourseViewer />
+            },
+            {
+                path: 'courses',
+                element: <ViewCourseDetails />
             }
         ]
     },
@@ -74,6 +82,14 @@ const routes = createBrowserRouter([
         path: 'instructor',
         element: <InstructorLayout />,
         children: [
+            {
+                path: '',
+                element: <InstructorDashboard />
+            },
+            {
+                path: 'profile',
+                element: <InstructorProfile/>
+            },
             {
                 path: 'feedback-list',
                 element: <FeedbackList />
@@ -92,6 +108,10 @@ const routes = createBrowserRouter([
         path: 'admin',
         element: <AdminLayout />,
         children: [
+            {
+                path: '',
+                element: <AdminDashboard />
+            },
             {
                 path: 'user-management',
                 element: <UserManagement />

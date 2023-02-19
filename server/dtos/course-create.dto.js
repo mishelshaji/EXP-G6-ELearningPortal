@@ -1,5 +1,4 @@
-class CourseViewDTO {
-    id = null;
+class CourseCreateDTO {
     title = null;
     metaDescription = null;
     level = null;
@@ -7,8 +6,8 @@ class CourseViewDTO {
     featuredImageLink = null;
     language = null;
     detailedDescription = null;
-    createdAt = null;
-    updatedAt = null;
+    categoryId = null;
+    userId = null;
 }
 
-module.exports = CourseViewDTO;
+module.exports = CourseCreateDTO;
