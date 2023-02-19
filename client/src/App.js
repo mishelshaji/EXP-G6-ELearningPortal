@@ -5,6 +5,7 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
+import ViewCourseDetails from './pages/student/CourseView';
 import Login from './pages/Login';
 import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
@@ -68,6 +69,10 @@ const routes = createBrowserRouter([
             {
                 path: 'course-view/:q',
                 element: <CourseViewer />
+            },
+            {
+                path: 'courses',
+                element: <ViewCourseDetails />
             }
         ]
     },
