@@ -67,6 +67,18 @@
     background-repeat: no-repeat;
 }
 
+.instructor-profile {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#instructor-dashboard {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.75), rgba(167, 195, 222, 0.42));
+    font-family: 'Rubik', sans-serif;
+}
+
 @media (max-width: 500px) {
     #logo {
         width: 150px;
@@ -75,4 +87,10 @@
     #search-box input {
         width: 15rem;
     }
+}
+
+.feedback-main-body {
+    height: 100%;
+    width: 100vw;
+    background-image: url('../images/bgimg.jpg');
 }
