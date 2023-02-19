@@ -18,6 +18,7 @@ import Order from './pages/student/Order';
 import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 const routes = createBrowserRouter([
     {
@@ -102,6 +103,10 @@ const routes = createBrowserRouter([
         path: 'admin',
         element: <AdminLayout />,
         children: [
+            {
+                path: '',
+                element: <AdminDashboard />
+            },
             {
                 path: 'user-management',
                 element: <UserManagement />

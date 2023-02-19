@@ -1,0 +1,27 @@
+.home-content {
+    margin-top: 50px;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+}
+
+.content {
+    overflow: auto;
+    margin-left: 305px;
+    
+}
+
+.home-content .content .col-md-3 {
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.header {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: rgb(255, 255, 255);
+}
