@@ -7,4 +7,4 @@ const app = express();
 app.use(express.json());
 app.use('/', userRoutes);
 
-app.listen(80);
+app.listen(process.env.DEV_PORT);

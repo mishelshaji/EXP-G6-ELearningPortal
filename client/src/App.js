@@ -5,7 +5,8 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import Login from "./pages/Login";
+import ViewCourseDetails from './pages/student/CourseView';
+import Login from './pages/Login';
 import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
 import UserManagement from './pages/admin/UserManagement';
@@ -15,7 +16,8 @@ import InstructorRegistration from './pages/instructor/InstructorRegistration';
 import EnrolledCourses from './pages/student/EnrolledCourses';
 import Order from './pages/student/Order';
 import InstructorProfile from './pages/instructor/InstructorProfile';
-import StudentProfile from './pages/student/StudentProfile';
+import InstructorDashboard from './pages/instructor/InstructorDashboard';
+import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
 
 const routes = createBrowserRouter([
@@ -68,6 +70,10 @@ const routes = createBrowserRouter([
             {
                 path: 'course-view/:q',
                 element: <CourseViewer />
+            },
+            {
+                path: 'courses',
+                element: <ViewCourseDetails />
             }
         ]
     },
@@ -76,8 +82,16 @@ const routes = createBrowserRouter([
         element: <InstructorLayout />,
         children: [
             {
+                path: '',
+                element: <InstructorDashboard />
+            },
+            {
                 path: 'profile',
                 element: <InstructorProfile/>
+            },
+            {
+                path: 'feedback-list',
+                element: <FeedbackList />
             },
             {
                 path: 'courses',
@@ -95,7 +109,7 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: 'user-management',
-                element: <UserManagement/>
+                element: <UserManagement />
             }
         ]
     }

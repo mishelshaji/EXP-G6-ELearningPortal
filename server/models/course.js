@@ -21,7 +21,7 @@ const Course = sequelize.define('course', {
     },
 
     level: {
-        type: DataTypes.STRING(15),
+        type: DataTypes.INTEGER,
         allowNull: false
     },
 
@@ -47,7 +47,14 @@ const Course = sequelize.define('course', {
 
     status: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 0
+    },
+
+    is_deleted: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     },
 
     user_id: {
