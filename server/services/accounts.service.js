@@ -19,11 +19,11 @@ function convertToJson(arg) {
 const studentRegistration = async (data) => {
     const response = new ServiceResponse();
     const studentRegistrationSchema = joi.object({
-        firstName: joi.string().required('First name is required'),
-        lastName: joi.string().required('Last name is required'),
-        email: joi.string().email().required('Email is mandatory'),
-        phone: joi.string().min(10).max(10).required('Mobile is required'),
-        password: joi.string().required('Password cannot be empty*')
+        firstName: joi.string().required(),
+        lastName: joi.string().required(),
+        email: joi.string().email().required(),
+        phone: joi.string().min(10).max(10).required(),
+        password: joi.string().required()
     });
 
     const { error } = studentRegistrationSchema.validate(data, {
@@ -84,11 +84,11 @@ const studentRegistration = async (data) => {
 const instructorRegistration = async (data) => {
     const response = new ServiceResponse();
     const instructorRegistrationSchema = joi.object({
-        firstName: joi.string().required('First name is required'),
-        lastName: joi.string().required('Last name is required'),
-        email: joi.string().email().required('Email is mandatory'),
+        firstName: joi.string().required(),
+        lastName: joi.string().required(),
+        email: joi.string().email().required(),
         phone: joi.string().min(10).max(10),
-        password: joi.string().required('Password cannot be empty*'),
+        password: joi.string().required(),
         education: joi.string().required(),
         dateOfBirth: joi.date().less(new Date('2004-01-01')).required(),
         yearOfExperience: joi.number().required(),
@@ -165,7 +165,7 @@ const instructorRegistration = async (data) => {
 const login = async (data) => {
     const response = new ServiceResponse();
     const loginValidationSchema = joi.object({
-        email: joi.string().email().required('Email is required'),
+        email: joi.string().email().required(),
         password: joi.string().required()
     });
 
