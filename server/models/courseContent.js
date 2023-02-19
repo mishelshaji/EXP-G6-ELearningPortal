@@ -31,7 +31,8 @@ const CourseContent = sequelize.define('course_content', {
 
     status: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        defaultValue: 1
     },
 
     course_id: {
