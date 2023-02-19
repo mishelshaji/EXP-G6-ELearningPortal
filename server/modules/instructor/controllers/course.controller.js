@@ -1,7 +1,7 @@
 const service = require('../../../services/course.service');
 
 const getAll = async (req, res) => {
-    const userId = req.params.id;
+    const userId = 3;
     const result = await service.getCourseByUser(userId);
     if (result.result) {
         return res.status(200).json(result.result.courses);
