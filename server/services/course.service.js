@@ -248,8 +248,25 @@ const remove = async (courseId) => {
     }
 }
 
-const updateStatus = async () => {
+const updateStatus = async (courseId, status) => {
+    const response = new ServiceResponse();
 
+    try {
+        const course = await Course.findByPk(courseId);
+
+        if (!course) {
+            response.addError('Course', 'Course not found');
+            return response;
+        }
+
+        const courseStatusUpdate = await Course.update({ status: status }, { where: { id: courseId } });
+
+        response.result = { courseStatusUpdate : courseStatusUpdate[0] };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 const setPrice = async () => {
@@ -283,5 +300,7 @@ module.exports = {
     getCourseByUser,
     create,
     update,
-    remove
+    remove,
+    updateStatus,
+    setPrice
 }
