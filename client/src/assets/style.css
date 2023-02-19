@@ -1,4 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300&family=Rubik&display=swap');
+
+.ff-rubik {
+    font-family: 'Rubik', sans-serif;
+}
+
+.ff-oxygen {
+    font-family: 'Oxygen', sans-serif;
+}
+
+.light-purple {
+    color: #cec0fc;
+}
 
 #home-introduction {
     background-image: url('../images/cover.jpg');
@@ -9,7 +21,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Rubik', sans-serif;
     flex-direction: column;
 }
 
@@ -64,4 +75,10 @@
     #search-box input {
         width: 15rem;
     }
+}
+
+.feedback-main-body {
+    height: 100%;
+    width: 100vw;
+    background-image: url('../images/bgimg.jpg');
 }
