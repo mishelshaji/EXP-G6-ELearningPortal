@@ -7,6 +7,8 @@ class CourseViewDTO {
     featuredImageLink = null;
     language = null;
     detailedDescription = null;
+    createdAt = null;
+    updatedAt = null;
 }
 
 module.exports = CourseViewDTO;

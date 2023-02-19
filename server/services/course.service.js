@@ -15,18 +15,7 @@ const getAll = async () => {
             return response;
         }
 
-        const courses = allCourses.map((course) => {
-            const dto = new CourseViewDTO();
-            dto.id = course.id;
-            dto.title = course.title;
-            dto.metaDescription = course.meta_description;
-            dto.level = course.level;
-            dto.price = course.price;
-            dto.featuredImageLink = course.featured_image_link;
-            dto.language = course.language;
-            dto.detailedDescription = course.detailed_description;
-            return dto;
-        });
+        const courses = generateCourseViewDto(allCourses);
         response.result = { courses };
         return response;
     } catch (error) {
@@ -48,18 +37,7 @@ const getAllFree = async () => {
             return response;
         }
 
-        const courses = freeCourses.map((course) => {
-            const dto = new CourseViewDTO();
-            dto.id = course.id;
-            dto.title = course.title;
-            dto.metaDescription = course.meta_description;
-            dto.level = course.level;
-            dto.price = course.price;
-            dto.featuredImageLink = course.featured_image_link;
-            dto.language = course.language;
-            dto.detailedDescription = course.detailed_description;
-            return dto;
-        });
+        const courses = generateCourseViewDto(freeCourses);
         response.result = { courses };
         return response;
     } catch (error) {
@@ -79,15 +57,7 @@ const getOne = async (id) => {
             return response;
         }
 
-        const dto = new CourseViewDTO();
-        dto.id = course.id;
-        dto.title = course.title;
-        dto.metaDescription = course.meta_description;
-        dto.level = course.level;
-        dto.price = course.price;
-        dto.featuredImageLink = course.featured_image_link;
-        dto.language = course.language;
-        dto.detailedDescription = course.detailed_description;
+        const dto = generateCourseViewDto([course]);
         response.result = { course: dto };
         return response;
     } catch (err) {
@@ -113,18 +83,29 @@ const getByNameLike = async (courseName) => {
             return response;
         }
 
-        const courses = courseResult.map((course) => {
-            const dto = new CourseViewDTO();
-            dto.id = course.id;
-            dto.title = course.title;
-            dto.metaDescription = course.meta_description;
-            dto.level = course.level;
-            dto.price = course.price;
-            dto.featuredImageLink = course.featured_image_link;
-            dto.language = course.language;
-            dto.detailedDescription = course.detailed_description;
-            return dto;
+        const courses = generateCourseViewDto(courseResult);
+        response.result = { courses };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
+}
+
+const getCourseByUser = async (userId) => {
+    const response = new ServiceResponse();
+
+    try {
+        const userCourses = await Course.findAll({
+            where: { user_id: userId }
         });
+
+        if (userCourses.length === 0) {
+            response.result = null;
+            return response;
+        }
+
+        const courses = generateCourseViewDto(userCourses);
         response.result = { courses };
         return response;
     } catch (err) {
@@ -145,11 +126,30 @@ const remove = async () => {
 
 }
 
+function generateCourseViewDto(array) {
+    const dtoArray = array.map((course) => {
+        const dto = new CourseViewDTO();
+        dto.id = course.id;
+        dto.title = course.title;
+        dto.metaDescription = course.meta_description;
+        dto.level = course.level;
+        dto.price = course.price;
+        dto.featuredImageLink = course.featured_image_link;
+        dto.language = course.language;
+        dto.detailedDescription = course.detailed_description;
+        dto.createdAt = course.createdAt;
+        dto.updatedAt = course.updatedAt;
+        return dto;
+    });
+    return dtoArray;
+}
+
 module.exports = {
     getAll,
     getAllFree,
     getOne,
     getByNameLike,
+    getCourseByUser,
     create,
     update,
     remove
