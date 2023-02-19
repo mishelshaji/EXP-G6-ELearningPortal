@@ -5,7 +5,7 @@ const homeController = require('./controllers/home.controller');
 
 const router = express.Router();
 
-// router.post('/student/registration', registrationController.studentRegistration);
+router.post('/student/registration', registrationController.studentRegistration);
 router.post('/instructor/registration', registrationController.instructorRegistration);
 router.post('/login', loginController.login);
 
