@@ -14,6 +14,21 @@ const updateStatus = async (req, res) => {
     }
 }
 
+const updatePrice = async (req, res) => {
+    const courseId = req.params.id;
+    const price = req.body.price;
+    const result = await service.setPrice(courseId, price);
+
+    if (result.result) {
+        return res.status(200).json(result.result);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
+}
+
 module.exports = {
-    updateStatus
+    updateStatus,
+    updatePrice
 }

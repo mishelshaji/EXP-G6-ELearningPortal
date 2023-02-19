@@ -269,8 +269,25 @@ const updateStatus = async (courseId, status) => {
     }
 }
 
-const setPrice = async () => {
+const setPrice = async (courseId, price) => {
+    const response = new ServiceResponse();
 
+    try {
+        const course = await Course.findByPk(courseId);
+
+        if (!course) {
+            response.addError('Course', 'Course not found');
+            return response;
+        }
+
+        const coursePriceUpdate = await Course.update({ price: price }, { where: { id: courseId } });
+
+        response.result = { coursePriceUpdate : coursePriceUpdate[0] };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
 }
 
 function generateCourseViewDto(array) {
