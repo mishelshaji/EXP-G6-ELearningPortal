@@ -1,32 +1,35 @@
 import React from 'react';
+import axios from 'axios';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function StudentRegistration() {
+  const navigate = useNavigate();
     async function registration(data) {
         try {
             const result = await axios.post(
                 'http://localhost:80/student/registration',
                 {
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  email: data.email,
-                  password: data.password,
-                  phone: data.mobile
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    password: data.password,
+                    phone: data.mobile
                 }
             );
             alert(result.data.result.status);
+            navigate('/login');
         } catch (err) {
-           const error = err.response.data.errors;
-          if (error.Email) {
-            alert('User already exists');
-          } else if (error.Validation) {
-            alert('User already exists');
-          } else if (error.Validation) {
-
-          }
+            const error = err.response.data.errors;
+            console.log(err);
+            if (error.Email) {
+                alert('User already exists');
+            } else if (error.Validation) {
+                alert('User already exists');
+            } else if (error.Validation) {
+            }
         }
     }
 
