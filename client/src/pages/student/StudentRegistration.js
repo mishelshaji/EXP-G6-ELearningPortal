@@ -4,7 +4,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function StudentRegistration() {
-  function registration(data) {}
+  function registration(data) {
+    
+  }
 
   const schema = yup.object().shape({
     name: yup

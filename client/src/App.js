@@ -20,6 +20,7 @@ import InstructorDashboard from './pages/instructor/InstructorDashboard';
 import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import CourseContent from './pages/instructor/CourseContent';
 
 const routes = createBrowserRouter([
     {
@@ -101,6 +102,10 @@ const routes = createBrowserRouter([
             {
                 path: 'create',
                 element: <CourseCreate />
+            },
+            {
+                path: 'course-content',
+                element: <CourseContent/>
             }
         ]
     },
