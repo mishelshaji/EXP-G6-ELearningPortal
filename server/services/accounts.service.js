@@ -6,6 +6,8 @@ const UserRole = require('../models/userRole');
 const UserDetails = require('../models/userDetails');
 const ServiceResponse = require('../utilities/types/service.response');
 const { createToken } = require('../utilities/jwtHelper');
+const { sequelize } = require('../config/db.config');
+const { QueryTypes } = require('sequelize');
 
 function convertToJson(arg) {
     return JSON.parse(JSON.stringify(arg));
@@ -94,8 +96,10 @@ const instructorRegistration = async (data) => {
         yearOfExperience: joi.number().required(),
         areaOfExpertise: joi.string().required(),
         alternateMobile: joi.string().min(10).max(10),
-        profilePictureLink: joi.string()
+        formData: joi.object()
     });
+
+    console.log(data.formData);
 
     const { error } = instructorRegistrationSchema.validate(data, {
         abortEarly: false
@@ -186,14 +190,17 @@ const login = async (data) => {
         if (user) {
             const passwordComparison = await bcrypt.compare(data.password, user.password);
 
-        if (passwordComparison) {
-            const userRole = convertToJson(await UserRole.findOne({
-                where: { user_id: user.id }
-            }));
-            const token = createToken({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id });
-            response.result = { status: 'login success', token };
-            return response;
-        }
+            if (passwordComparison) {
+                const userRole = convertToJson(await sequelize.query(`SELECT roles.role FROM roles JOIN 
+                user_roles ON user_roles.role_id = roles.id WHERE user_roles.user_id = :userId`, {
+                    replacements: { userId: user.id },
+                    type: QueryTypes.SELECT
+                }
+                ));
+                const token = createToken({ email: user.email, role: userRole[0].role });
+                response.result = { status: 'login success', token };
+                return response;
+            }
 
             response.addError('Login', 'Invalid email or password');
             return response;

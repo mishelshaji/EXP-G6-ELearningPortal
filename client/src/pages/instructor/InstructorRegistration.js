@@ -1,13 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Modal, Spinner, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 export default function InstructorRegistration() {
-  function registration(data) {}
+  const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+    navigate('/login');
+  };
+  const handleShow = () => setShow(true);
+  const [file, setFile] = useState(null);
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  }
+
+  async function registration(data) {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+
+    try {
+      await axios.post(
+        'http://localhost:80/instructor/registration',
+        {
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          password: data.password,
+          education: data.education,
+          dateOfBirth: data.dob,
+          yearOfExperience: data.yearOfExperience,
+          areaOfExpertise: data.areaOfExpertise,
+          alternateMobile: data.alternateMobile,
+          phone: data.mobile,
+          formData
+        }
+      );
+      handleShow();
+    } catch (err) {
+      const error = err.response.data.errors;
+      if (error.Email) {
+        setError(error.Email);
+      } else if (error.Validation) {
+        setError(error.Validation);
+      } else if (error.Database) {
+        setError(error.Database);
+      }
+    }
+    setLoading(false);
+  }
 
   const schema = yup.object().shape({
-    name: yup
+    firstName: yup
+      .string()
+      .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
+      .required('Name field cannot be empty*'),
+    lastName: yup
       .string()
       .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
       .required('Name field cannot be empty*'),
@@ -51,6 +106,17 @@ export default function InstructorRegistration() {
 
   return (
     <div id='registration'>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>Registration success</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Thank you for signing up. Your account has been created.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={handleClose}>
+            Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <div className='row height-200' id='instructor-registration'>
         <div className='col-sm-6' id='instructor-cover'></div>
         <div className='col-sm-4 offset-sm-1'>
@@ -58,17 +124,34 @@ export default function InstructorRegistration() {
             <form onSubmit={handleSubmit(registration)}>
               <div className='mb-3'>
                 <h2 className='text-center text-secondary mt-5'>Register</h2>
+                {error ? (
+                  <span className='d-block text-danger text-center'>
+                    {error}
+                  </span>
+                ) : null}
               </div>
               <div className='mb-3'>
-                <label htmlFor='name'>Name</label>
+                <label htmlFor='firstName'>First name</label>
                 <input
                   type='text'
-                  id='name'
+                  id='firstName'
                   className='form-control'
-                  {...register('name')}
+                  {...register('firstName')}
                 />
-                {errors.name ? (
-                  <span className='text-danger'>{errors.name.message}</span>
+                {errors.firstName ? (
+                  <span className='text-danger'>{errors.firstName.message}</span>
+                ) : null}
+              </div>
+              <div className='mb-3'>
+                <label htmlFor='lastName'>Last name</label>
+                <input
+                  type='text'
+                  id='lastName'
+                  className='form-control'
+                  {...register('lastName')}
+                />
+                {errors.lastName ? (
+                  <span className='text-danger'>{errors.lastName.message}</span>
                 ) : null}
               </div>
               <div className='mb-3'>
@@ -155,11 +238,8 @@ export default function InstructorRegistration() {
                   type='file'
                   id='uploadPhoto'
                   className='form-control'
-                  {...register('uploadPhoto')}
+                  onChange={handleFile}
                 />
-                {errors.uploadPhoto ? (
-                  <p className='text-danger'>{errors.uploadPhoto.message}</p>
-                ) : null}
               </div>
               <div className='mb-3'>
                 <label htmlFor='password'>Password</label>
@@ -189,6 +269,15 @@ export default function InstructorRegistration() {
               </div>
               <div className='d-grid mt-3'>
                 <button className='btn btn-primary' id='registerButton'>
+                  {loading && (
+                    <Spinner
+                      animation='border'
+                      role='status'
+                      className='d-block mx-auto'
+                    >
+                      <span className='visually-hidden'>Loading...</span>
+                    </Spinner>
+                  )}
                   Submit
                 </button>
               </div>

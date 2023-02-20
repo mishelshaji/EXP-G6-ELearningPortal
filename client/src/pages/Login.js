@@ -22,8 +22,13 @@ const Login = () => {
             });
             localStorage.setItem('token', result.data.result.token);
             const decoded = jwt_decode(result.data.result.token);
-            console.log(decoded);
-            navigate('/instructor');
+            if (decoded.role === 'admin') {
+                navigate('/admin');
+            } else if (decoded.role === 'student') {
+                navigate('/student');
+            } else {
+                navigate('/instructor');
+            }
         } catch (err) {
             const error = err.response.data.errors;
             if (error.Login) {

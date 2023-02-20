@@ -8,7 +8,7 @@ import './assets/login.css';
 import './assets/AdminDashboard.css';
 
 axios.interceptors.request.use((request) => {
-    if (request.url.includes('/login') || request.url.includes('/registration')) {
+    if (request.url.includes('/login') || request.url.includes('/registration') || request.url.includes('/')) {
         return request;
     }
 
