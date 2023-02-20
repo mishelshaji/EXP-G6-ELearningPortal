@@ -261,7 +261,7 @@ const updateStatus = async (courseId, status) => {
 
         const courseStatusUpdate = await Course.update({ status: status }, { where: { id: courseId } });
 
-        response.result = { courseStatusUpdate : courseStatusUpdate[0] };
+        response.result = { courseStatusUpdate: courseStatusUpdate[0] };
         return response;
     } catch (err) {
         response.addError('Database', err);
@@ -282,7 +282,50 @@ const setPrice = async (courseId, price) => {
 
         const coursePriceUpdate = await Course.update({ price: price }, { where: { id: courseId } });
 
-        response.result = { coursePriceUpdate : coursePriceUpdate[0] };
+        response.result = { coursePriceUpdate: coursePriceUpdate[0] };
+        return response;
+    } catch (err) {
+        response.addError('Database', err);
+        return response;
+    }
+}
+
+const getAllDeleted = async () => {
+    const response = new ServiceResponse();
+
+    try {
+        const allCourses = await Course.findAll({
+            where: { is_deleted: 1 }
+        });
+
+        if (allCourses.length === 0) {
+            response.result = null;
+            return response;
+        }
+
+        const courses = generateCourseViewDto(allCourses);
+        response.result = { courses };
+        return response;
+    } catch (error) {
+        response.addError('Database', err);
+        return response;
+    }
+}
+
+const removeFromDb = async (courseId) => {
+    const response = new ServiceResponse();
+
+    try {
+        const course = await Course.findByPk(courseId);
+
+        if (!course) {
+            response.addError('Course', 'Course not found');
+            return response;
+        }
+
+        const courseDelete = await Course.destroy({ where: { id: courseId } })
+
+        response.result = { courseDeletionStatus: courseDelete };
         return response;
     } catch (err) {
         response.addError('Database', err);
@@ -319,5 +362,7 @@ module.exports = {
     update,
     remove,
     updateStatus,
-    setPrice
+    setPrice,
+    getAllDeleted,
+    removeFromDb
 }
