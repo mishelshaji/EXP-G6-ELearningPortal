@@ -6,10 +6,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import LoginCard from '../components/LoginCard';
 import { Spinner } from 'react-bootstrap';
 import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     async function login(data) {
         setLoading(true);
@@ -21,6 +23,7 @@ const Login = () => {
             localStorage.setItem('token', result.data.result.token);
             const decoded = jwt_decode(result.data.result.token);
             console.log(decoded);
+            navigate('/instructor');
         } catch (err) {
             const error = err.response.data.errors;
             if (error.Login) {

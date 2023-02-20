@@ -6,7 +6,7 @@ const createToken = (payload) => {
         process.env.SECRET_KEY, 
         { 
             algorithm: 'HS256', 
-            expiresIn: '1d',
+            expiresIn: '10m',
             issuer: 'MyLearn',
             audience: 'MyLearn'
         });

@@ -5,7 +5,7 @@ import { Row, Col, Button, Table, Card } from 'react-bootstrap';
 function InstructorDashboard() {
     useEffect(() => {
         (async function getCourse() {
-            axios.get('http://localhost:80/instructor/courses/all');
+            const courses = await axios.get('http://localhost:80/instructor/courses/all');
         })();
     },[]);
 
