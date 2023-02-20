@@ -10,11 +10,6 @@ const UserCourseEnrollment = sequelize.define('user_course_enrollment', {
         autoIncrement: true
     },
 
-    enrollment_date: {
-        type: DataTypes.DATE,
-        allowNull: false
-    },
-
     status: {
         type: DataTypes.INTEGER,
         allowNull: false,
