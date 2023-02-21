@@ -22,7 +22,7 @@ export default function InstructorRegistration() {
 
     try {
       await axios.post(
-        'http://localhost:80/instructor/registration',
+        '/instructor/registration',
         {
           firstName: data.firstName,
           lastName: data.lastName,

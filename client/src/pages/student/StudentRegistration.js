@@ -21,7 +21,7 @@ export default function StudentRegistration() {
 		setLoading(true);
 		try {
 			await axios.post(
-				'http://localhost:80/student/registration',
+				'/student/registration',
 				{
 					firstName: data.firstName,
 					lastName: data.lastName,
