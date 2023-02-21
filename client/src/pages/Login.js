@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import LoginCard from '../components/LoginCard';
+import { Spinner } from 'react-bootstrap';
+import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    function login(data) {
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
+    async function login(data) {
+        setLoading(true);
+        try {
+            const result = await axios.post('http://localhost:80/login', {
+                email: data.username,
+                password: data.password
+            });
+            localStorage.setItem('token', result.data.result.token);
+            const decoded = jwt_decode(result.data.result.token);
+
+            if (decoded.role === 'admin') {
+                navigate('/admin');
+            } else if (decoded.role === 'student') {
+                navigate('/student');
+            } else {
+                navigate('/instructor');
+            }
+        } catch (err) {
+            const error = err.response.data.errors;
+            setError(error.Error);
+        }
+        setLoading(false);
     }
-    
+
     const schema = yup.object().shape({
         username: yup
             .string()
@@ -34,6 +62,20 @@ const Login = () => {
             <div className='input-body'>
                 <LoginCard>
                     <h1 className='login-title'>Login</h1>
+                    {loading && (
+                        <Spinner
+                            animation='border'
+                            role='status'
+                            className='d-block mx-auto'
+                        >
+                            <span className='visually-hidden'>Loading...</span>
+                        </Spinner>
+                    )}
+                    {error ? (
+                        <span className='d-block text-danger text-center'>
+                            {error}
+                        </span>
+                    ) : null}
                     <form onSubmit={handleSubmit(login)}>
                         <div className='input-container'>
                             <input

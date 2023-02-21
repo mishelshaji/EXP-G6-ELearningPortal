@@ -2,6 +2,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { Button } from 'react-bootstrap';
 import Logo from "../../images/logo.png";
 import { BsList } from 'react-icons/bs';
+import { Link } from "react-router-dom";
 
 export default function Header(props) {
 	return (
@@ -10,13 +11,15 @@ export default function Header(props) {
 				<BsList size={24} />
 			</Button>
 			<Navbar.Brand className='ms-auto'>
-				<img
-					src={Logo}
-					width="200"
-					className="d-inline-block align-top"
-					alt="myLearn"
-					id="logo"
-				/>
+				<Link to='/instructor'>
+					<img
+						src={Logo}
+						width="200"
+						className="d-inline-block align-top"
+						alt="myLearn"
+						id="logo"
+					/>
+				</Link>
 			</Navbar.Brand>
 		</Navbar>
 	);

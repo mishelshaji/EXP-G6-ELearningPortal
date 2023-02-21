@@ -37,7 +37,7 @@
 }
 
 .height-100 {
-    height: 100vh;
+    min-height: 100vh;
 }
 
 #student-registration {
@@ -93,4 +93,9 @@
     height: 100%;
     width: 100vw;
     background-image: url('../images/bgimg.jpg');
+}
+
+#show-content{
+    display: flex;
+    flex-direction: column;
 }
