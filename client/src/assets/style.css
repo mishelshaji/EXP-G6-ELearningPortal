@@ -94,3 +94,8 @@
     width: 100vw;
     background-image: url('../images/bgimg.jpg');
 }
+
+#show-content{
+    display: flex;
+    flex-direction: column;
+}
