@@ -22,6 +22,7 @@ const Login = () => {
             });
             localStorage.setItem('token', result.data.result.token);
             const decoded = jwt_decode(result.data.result.token);
+
             if (decoded.role === 'admin') {
                 navigate('/admin');
             } else if (decoded.role === 'student') {
@@ -31,13 +32,7 @@ const Login = () => {
             }
         } catch (err) {
             const error = err.response.data.errors;
-            if (error.Login) {
-                setError(error.Login);
-            } else if (error.Validation) {
-                setError(error.Validation);
-            } else if (error.Database) {
-                setError(error.Database);
-            }
+            setError(error.Error);
         }
         setLoading(false);
     }

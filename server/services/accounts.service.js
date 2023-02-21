@@ -33,7 +33,7 @@ const studentRegistration = async (data) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -45,7 +45,7 @@ const studentRegistration = async (data) => {
         });
 
         if (isUserAlreadyExist) {
-            response.addError('Email', 'User already exist');
+            response.addError('Error', 'User already exist');
             return response;
         }
 
@@ -74,7 +74,7 @@ const studentRegistration = async (data) => {
         response.result = { status: 'registration success' };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 };
@@ -92,21 +92,17 @@ const instructorRegistration = async (data) => {
         phone: joi.string().min(10).max(10),
         password: joi.string().required(),
         education: joi.string().required(),
-        dateOfBirth: joi.date().less(new Date('2004-01-01')).required(),
+        dateOfBirth: joi.date().required(),
         yearOfExperience: joi.number().required(),
         areaOfExpertise: joi.string().required(),
-        alternateMobile: joi.string().min(10).max(10),
-        formData: joi.object()
     });
-
-    console.log(data.formData);
 
     const { error } = instructorRegistrationSchema.validate(data, {
         abortEarly: false
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -118,7 +114,7 @@ const instructorRegistration = async (data) => {
         });
 
         if (isUserAlreadyExist) {
-            response.addError('Email', 'User already exist');
+            response.addError('Error', 'User already exist');
             return response;
         }
 
@@ -144,8 +140,6 @@ const instructorRegistration = async (data) => {
             date_of_birth: data.dateOfBirth,
             year_of_experience: data.yearOfExperience,
             area_of_expertise: data.areaOfExpertise,
-            profile_picture_link: data.profilePictureLink,
-            alternate_mobile: data.alternateMobile,
             user_id: createdUser.id
         })
 
@@ -157,7 +151,7 @@ const instructorRegistration = async (data) => {
         response.result = { status: 'registration success' };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -178,7 +172,7 @@ const login = async (data) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -197,18 +191,18 @@ const login = async (data) => {
                     type: QueryTypes.SELECT
                 }
                 ));
-                const token = createToken({ email: user.email, role: userRole[0].role });
+                const token = createToken({ id: user.id, email: user.email, role: userRole[0].role });
                 response.result = { status: 'login success', token };
                 return response;
             }
 
-            response.addError('Login', 'Invalid email or password');
+            response.addError('Error', 'Invalid email or password');
             return response;
         }
-        response.addError('Login', 'User not found');
+        response.addError('Error', 'User not found');
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -217,4 +211,4 @@ module.exports = {
     studentRegistrationService: studentRegistration,
     instructorRegistrationService: instructorRegistration,
     login
-};
+}

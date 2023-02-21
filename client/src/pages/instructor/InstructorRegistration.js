@@ -16,15 +16,9 @@ export default function InstructorRegistration() {
     navigate('/login');
   };
   const handleShow = () => setShow(true);
-  const [file, setFile] = useState(null);
-  const handleFile = (e) => {
-    setFile(e.target.files[0]);
-  }
 
   async function registration(data) {
     setLoading(true);
-    const formData = new FormData();
-    formData.append('profilePicture', file);
 
     try {
       await axios.post(
@@ -38,21 +32,13 @@ export default function InstructorRegistration() {
           dateOfBirth: data.dob,
           yearOfExperience: data.yearOfExperience,
           areaOfExpertise: data.areaOfExpertise,
-          alternateMobile: data.alternateMobile,
           phone: data.mobile,
-          formData
         }
       );
       handleShow();
     } catch (err) {
       const error = err.response.data.errors;
-      if (error.Email) {
-        setError(error.Email);
-      } else if (error.Validation) {
-        setError(error.Validation);
-      } else if (error.Database) {
-        setError(error.Database);
-      }
+      setError(error.Error);
     }
     setLoading(false);
   }
@@ -81,7 +67,20 @@ export default function InstructorRegistration() {
       ),
     yearOfExperience: yup.string().required('Field Required*'),
     education: yup.string().required('Field required*'),
-    dob: yup.string('Enter valid date of birth').required('Field required*'),
+    dob: yup.date().required('Field required*').transform((value, inputDate) => {
+      console.log(inputDate);
+      if (inputDate.length === 0) {
+        return null;
+      }
+      return value;
+    }).test("Age must be between 18 and 100", function (value) {
+      const today = new Date();
+      const age = today.getFullYear() - value.getFullYear();
+      value.setFullYear(today.getFullYear());
+      if (age >= 18 && age <= 100) {
+        return true;
+      }
+    }),
     areaOfExpertise: yup.string().required('Field required*'),
     password: yup
       .string()
@@ -231,15 +230,6 @@ export default function InstructorRegistration() {
                     {errors.areaOfExpertise.message}
                   </span>
                 ) : null}
-              </div>
-              <div className='mb-3'>
-                <label htmlFor='uploadPhoto'>Upload photo</label>
-                <input
-                  type='file'
-                  id='uploadPhoto'
-                  className='form-control'
-                  onChange={handleFile}
-                />
               </div>
               <div className='mb-3'>
                 <label htmlFor='password'>Password</label>

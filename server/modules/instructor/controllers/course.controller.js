@@ -3,7 +3,7 @@ const CourseUpdateDTO = require('../../../dtos/course-update.dto');
 const service = require('../../../services/course.service');
 
 const getAll = async (req, res) => {
-    const userId = 1;
+    const userId = req.user.id;
     const result = await service.getCourseByUser(userId);
     if (result.result) {
         return res.status(200).json(result.result.courses);
@@ -36,7 +36,7 @@ const create = async (req, res) => {
     courseDto.language = req.body.language;
     courseDto.detailedDescription = req.body.detailedDescription;
     courseDto.categoryId = req.body.categoryId;
-    courseDto.userId = req.body.userId;
+    courseDto.userId = req.user.id;
 
     const result = await service.create(courseDto);
     if (result.result) {

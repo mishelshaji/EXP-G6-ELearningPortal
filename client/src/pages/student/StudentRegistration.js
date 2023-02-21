@@ -33,13 +33,7 @@ export default function StudentRegistration() {
 			handleShow();
 		} catch (err) {
 			const error = err.response.data.errors;
-			if (error.Email) {
-				setError(error.Email);
-			} else if (error.Validation) {
-				setError(error.Validation);
-			} else if (error.Database) {
-				setError(error.Database);
-			}
+            setError(error.Error);
 		}
 		setLoading(false);
 	}
@@ -74,7 +68,7 @@ export default function StudentRegistration() {
 			.required('Password cannot be empty*')
 			.matches(
 				/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-				'Minimum eight characters, at least one letter and one number'
+				'Minimum eight characters, at least one letter and one number, no special characters'
 			),
 		confirmPassword: yup
 			.string()

@@ -5,9 +5,9 @@ function authenticationMiddleware(req, res, next) {
         return next();
     }
     
-    let token;
+    let token = req.headers.authorization;
 
-    if (!req.headers.authorization) {
+    if (!token) {
         return res.status(403).json({err: 'Unauthorized access'});
     }
 
@@ -15,6 +15,7 @@ function authenticationMiddleware(req, res, next) {
     
     try {
         const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        req.user = decodedToken;
         return next();
     } catch (err) {
         return res.status(403).json({err});
