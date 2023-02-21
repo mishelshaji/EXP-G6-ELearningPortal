@@ -156,7 +156,7 @@ const create = async (courseCreateDto) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -177,7 +177,7 @@ const create = async (courseCreateDto) => {
         response.result = { course };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }

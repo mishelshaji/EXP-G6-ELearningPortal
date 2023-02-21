@@ -6,6 +6,8 @@ const UserRole = require('../models/userRole');
 const UserDetails = require('../models/userDetails');
 const ServiceResponse = require('../utilities/types/service.response');
 const { createToken } = require('../utilities/jwtHelper');
+const { sequelize } = require('../config/db.config');
+const { QueryTypes } = require('sequelize');
 
 function convertToJson(arg) {
     return JSON.parse(JSON.stringify(arg));
@@ -31,7 +33,7 @@ const studentRegistration = async (data) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -43,7 +45,7 @@ const studentRegistration = async (data) => {
         });
 
         if (isUserAlreadyExist) {
-            response.addError('Email', 'User already exist');
+            response.addError('Error', 'User already exist');
             return response;
         }
 
@@ -72,7 +74,7 @@ const studentRegistration = async (data) => {
         response.result = { status: 'registration success' };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 };
@@ -90,11 +92,9 @@ const instructorRegistration = async (data) => {
         phone: joi.string().min(10).max(10),
         password: joi.string().required(),
         education: joi.string().required(),
-        dateOfBirth: joi.date().less(new Date('2004-01-01')).required(),
+        dateOfBirth: joi.date().required(),
         yearOfExperience: joi.number().required(),
         areaOfExpertise: joi.string().required(),
-        alternateMobile: joi.string().min(10).max(10),
-        profilePictureLink: joi.string()
     });
 
     const { error } = instructorRegistrationSchema.validate(data, {
@@ -102,7 +102,7 @@ const instructorRegistration = async (data) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -114,7 +114,7 @@ const instructorRegistration = async (data) => {
         });
 
         if (isUserAlreadyExist) {
-            response.addError('Email', 'User already exist');
+            response.addError('Error', 'User already exist');
             return response;
         }
 
@@ -140,8 +140,6 @@ const instructorRegistration = async (data) => {
             date_of_birth: data.dateOfBirth,
             year_of_experience: data.yearOfExperience,
             area_of_expertise: data.areaOfExpertise,
-            profile_picture_link: data.profilePictureLink,
-            alternate_mobile: data.alternateMobile,
             user_id: createdUser.id
         })
 
@@ -153,7 +151,7 @@ const instructorRegistration = async (data) => {
         response.result = { status: 'registration success' };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -174,7 +172,7 @@ const login = async (data) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -186,22 +184,25 @@ const login = async (data) => {
         if (user) {
             const passwordComparison = await bcrypt.compare(data.password, user.password);
 
-        if (passwordComparison) {
-            const userRole = convertToJson(await UserRole.findOne({
-                where: { user_id: user.id }
-            }));
-            const token = createToken({ name: `${user.first_name} ${user.last_name}`, email: user.email, role: userRole.role_id });
-            response.result = { status: 'login success', token };
-            return response;
-        }
+            if (passwordComparison) {
+                const userRole = convertToJson(await sequelize.query(`SELECT roles.role FROM roles JOIN 
+                user_roles ON user_roles.role_id = roles.id WHERE user_roles.user_id = :userId`, {
+                    replacements: { userId: user.id },
+                    type: QueryTypes.SELECT
+                }
+                ));
+                const token = createToken({ id: user.id, email: user.email, role: userRole[0].role });
+                response.result = { status: 'login success', token };
+                return response;
+            }
 
-            response.addError('Login', 'Invalid email or password');
+            response.addError('Error', 'Invalid email or password');
             return response;
         }
-        response.addError('Login', 'User not found');
+        response.addError('Error', 'User not found');
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -210,4 +211,4 @@ module.exports = {
     studentRegistrationService: studentRegistration,
     instructorRegistrationService: instructorRegistration,
     login
-};
+}

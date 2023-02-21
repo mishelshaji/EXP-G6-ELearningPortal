@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Row, Col, Button, Table, Card } from 'react-bootstrap';
+import Axios from "../../services/axios"
 
 function InstructorDashboard() {
     useEffect(() => {
-        (async function getCourse() {
-            const courses = await axios.get('http://localhost:80/instructor/courses/all');
-        })();
-    },[]);
+		Axios.get('/instructor/categories').then((res) => {
+			
+		});
+	}, [])
 
     return (
         <>

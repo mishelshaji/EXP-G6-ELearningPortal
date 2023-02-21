@@ -22,17 +22,17 @@ const Login = () => {
             });
             localStorage.setItem('token', result.data.result.token);
             const decoded = jwt_decode(result.data.result.token);
-            console.log(decoded);
-            navigate('/instructor');
+
+            if (decoded.role === 'admin') {
+                navigate('/admin');
+            } else if (decoded.role === 'student') {
+                navigate('/student');
+            } else {
+                navigate('/instructor');
+            }
         } catch (err) {
             const error = err.response.data.errors;
-            if (error.Login) {
-                setError(error.Login);
-            } else if (error.Validation) {
-                setError(error.Validation);
-            } else if (error.Database) {
-                setError(error.Database);
-            }
+            setError(error.Error);
         }
         setLoading(false);
     }

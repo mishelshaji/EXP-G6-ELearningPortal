@@ -11,7 +11,7 @@ export default function CourseCard(props) {
           {props.description}
         </Card.Text>
         <span>{props.price}</span>
-        <span className='float-end btn btn-outline-secondary' title="Enroll Now"><i className="fa-solid fa-cart-shopping"></i></span>
+        <span className='float-end btn btn-outline-secondary' title="Enroll Now"><i className="fa-solid fa-bag-shopping"></i></span>
       </Card.Body>
     </Card>
   )

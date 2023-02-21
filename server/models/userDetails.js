@@ -29,11 +29,6 @@ const UserDetails = sequelize.define('user_detail', {
         allowNull: false
     },
 
-    profile_picture_link: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-
     alternate_mobile: {
         type: DataTypes.STRING(13),
         allowNull: true

@@ -29,7 +29,7 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Home />
+                element: <Home page='landing'/>
             },
             {
                 path: 'search/:q',
@@ -55,7 +55,11 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Home />
+                element: <Home page='student-home'/>
+            },
+            {
+                path: 'search/:q',
+                element: <CourseSearch />
             },
             {
                 path: 'enrolled-courses',

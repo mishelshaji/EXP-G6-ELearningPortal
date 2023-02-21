@@ -121,4 +121,4 @@ CourseContent.belongsToMany(User, { through: UserCourseProgress, foreignKey: 'co
 User.belongsToMany(Course, { through: Certificate, foreignKey: 'user_id' });
 Course.belongsToMany(User, { through: Certificate, foreignKey: 'course_id' });
 
-sequelize.sync({force: true});
+sequelize.sync({alter: true});

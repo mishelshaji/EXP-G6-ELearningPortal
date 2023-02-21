@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 
-export default function Home() {
+export default function Home(params) {
   const data = [
     {
       id: '1',
@@ -76,8 +76,13 @@ export default function Home() {
   let navigate = useNavigate();
 
   function searchCourse(data) {
-    let path = `/search/${data.searchKey}`;
-    navigate(path);
+    if (params.page === 'landing') {
+      let path = `/search/${data.searchKey}`;
+      navigate(path);
+    } else {
+      let path = `/student/search/${data.searchKey}`;
+      navigate(path);
+    }
   }
 
   const schema = yup.object().shape({
