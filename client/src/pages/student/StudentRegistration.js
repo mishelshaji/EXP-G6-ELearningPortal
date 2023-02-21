@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import Axios from "../../services/axios";
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +20,7 @@ export default function StudentRegistration() {
 	async function registration(data) {
 		setLoading(true);
 		try {
-			await axios.post(
+			await Axios.post(
 				'/student/registration',
 				{
 					firstName: data.firstName,

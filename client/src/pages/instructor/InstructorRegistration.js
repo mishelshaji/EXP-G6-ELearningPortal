@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import * as yup from 'yup';
-import axios from 'axios';
+import Axios from "../../services/axios";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal, Spinner, Button } from 'react-bootstrap';
@@ -21,7 +21,7 @@ export default function InstructorRegistration() {
     setLoading(true);
 
     try {
-      await axios.post(
+      await Axios.post(
         '/instructor/registration',
         {
           firstName: data.firstName,
@@ -68,7 +68,6 @@ export default function InstructorRegistration() {
     yearOfExperience: yup.string().required('Field Required*'),
     education: yup.string().required('Field required*'),
     dob: yup.date().required('Field required*').transform((value, inputDate) => {
-      console.log(inputDate);
       if (inputDate.length === 0) {
         return null;
       }

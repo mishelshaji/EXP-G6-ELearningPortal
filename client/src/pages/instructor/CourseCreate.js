@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import Axios from "../../services/axios"
+import Axios from "../../services/axios";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal, Spinner, Button, Col } from 'react-bootstrap';
@@ -18,7 +18,7 @@ const CourseCreate = () => {
 	formData.append('courseImage', file)
 
 	useEffect(() => {
-		Axios.get('http://localhost:80/instructor/categories').then((categories) => {
+		Axios.get('/instructor/categories').then((categories) => {
 			setCategories(categories.data);
 		})
 	}, [])
