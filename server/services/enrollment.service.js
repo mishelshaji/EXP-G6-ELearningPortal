@@ -1,8 +1,8 @@
 const UserCourseEnrollment = require('../models/userCourseEnrollment');
-const Course = require('../models/course');
 const EnrollmentViewDTO = require('../dtos/enrollment-view.dto');
 const ServiceResponse = require('../utilities/types/service.response');
-const User = require('../models/user');
+const { QueryTypes } = require('sequelize');
+const { sequelize } = require('../config/db.config');
 
 const enroll = async (userId, courseId) => {
     const response = new ServiceResponse();
@@ -11,7 +11,7 @@ const enroll = async (userId, courseId) => {
         const alreadyEnrolled = await isEnrolled(userId, courseId);
 
         if (alreadyEnrolled === 1) {
-            response.addError('Enrollment', 'Student is already enrolled in this course');
+            response.addError('Error', 'Student is already enrolled in this course');
             return response;
         }
 
@@ -28,7 +28,7 @@ const enroll = async (userId, courseId) => {
         response.result = { enrollment: dto };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -45,14 +45,14 @@ const getTotalEnrolledByCourseId = async (courseId) => {
         });
 
         if (totalEnrollments === 0) {
-            response.addError('Enrollment', 'No records found');
+            response.addError('Error', 'No records found');
             return response;
         }
 
         response.result = totalEnrollments;
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -61,11 +61,12 @@ const getEnrolledCoursesByUserId = async (userId) => {
     const response = new ServiceResponse();
 
     try {
-        const enrolledCourses = await User.findAll({
-            where: { user_id : userId },
-            include: {
-                model: Course
-            }
+        const enrolledCourses = await sequelize.query(`select courses.title, courses.meta_description, courses.level,
+        courses.language, courses.featured_image_link, user_course_enrollments.course_completion_status, user_course_enrollments.createdAt from user_course_enrollments
+        inner join users on user_course_enrollments.user_id = users.id inner join courses on user_course_enrollments.course_id = courses.id
+        where user_course_enrollments.user_id = :userId and user_course_enrollments.status = 1`, {
+            replacements: { userId: userId },
+            type: QueryTypes.SELECT
         });
 
         if (enrolledCourses.length === 0) {
@@ -77,7 +78,7 @@ const getEnrolledCoursesByUserId = async (userId) => {
         return response;
     } catch (err) {
         console.log(err);
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
