@@ -44,8 +44,31 @@ Otp.belongsTo(User, {
     foreignKey: 'user_id'
 });
 
-User.belongsToMany(Course, { through: UserCourseEnrollment, foreignKey: 'user_id' });
-Course.belongsToMany(User, { through: UserCourseEnrollment, foreignKey: 'course_id' });
+Course.hasMany(UserCourseEnrollment, {
+    constraints: true,
+    onDelete: 'CASCADE',
+    sourceKey: 'id',
+    foreignKey: 'course_id'
+});
+UserCourseEnrollment.belongsTo(User, {
+    constraints: true,
+    onDelete: 'CASCADE',
+    targetKey: 'id',
+    foreignKey: 'course_id'
+});
+
+User.hasMany(UserCourseEnrollment, {
+    constraints: true,
+    onDelete: 'CASCADE',
+    sourceKey: 'id',
+    foreignKey: 'user_id'
+});
+UserCourseEnrollment.belongsTo(User, {
+    constraints: true,
+    onDelete: 'CASCADE',
+    targetKey: 'id',
+    foreignKey: 'user_id'
+});
 
 UserCourseEnrollment.hasMany(Payment, {
     constraints: true,
@@ -53,6 +76,7 @@ UserCourseEnrollment.hasMany(Payment, {
     targetKey: 'id',
     foreignKey: 'enrollment_id'
 });
+
 Payment.belongsTo(UserCourseEnrollment, {
     constraints: true,
     onDelete: 'CASCADE',
