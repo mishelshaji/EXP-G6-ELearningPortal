@@ -9,6 +9,7 @@ class CourseViewDTO {
     detailedDescription = null;
     createdAt = null;
     updatedAt = null;
+    status = null;
 }
 
 module.exports = CourseViewDTO;

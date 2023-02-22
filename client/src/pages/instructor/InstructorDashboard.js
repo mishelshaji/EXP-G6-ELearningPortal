@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Button, Table, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Axios from "../../services/axios"
 
 function InstructorDashboard() {
@@ -15,26 +16,26 @@ function InstructorDashboard() {
                 <div>
                     <Row>
                         <Col md={3}>
-                            <Card className='shadow bg-body-tertiary rounded'>
+                            <Card className='shadow bg-body-tertiary rounded mb-3'>
                                 <Card.Body>
                                     <Card.Title>My Courses</Card.Title>
                                     <Card.Text>
-                                        <h2>50</h2>
+                                        <span>50</span>
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
-                                    <Button variant='primary'>
+                                    <Link to={'/instructor/courses'} className='btn btn-primary'>
                                         View Courses
-                                    </Button>
+                                    </Link>
                                 </Card.Footer>
                             </Card>
                         </Col>
                         <Col md={3}>
-                            <Card className='shadow bg-body-tertiary rounded'>
+                            <Card className='shadow bg-body-tertiary rounded mb-3'>
                                 <Card.Body>
                                     <Card.Title>Students</Card.Title>
                                     <Card.Text>
-                                        <h2>200</h2>
+                                        <span>200</span>
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
@@ -45,11 +46,11 @@ function InstructorDashboard() {
                             </Card>
                         </Col>
                         <Col md={3}>
-                            <Card className='shadow bg-body-tertiary rounded'>
+                            <Card className='shadow bg-body-tertiary rounded mb-3'>
                                 <Card.Body>
                                     <Card.Title>Active Courses</Card.Title>
                                     <Card.Text>
-                                        <h2>20</h2>
+                                        <span>20</span>
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>
@@ -58,11 +59,11 @@ function InstructorDashboard() {
                             </Card>
                         </Col>
                         <Col md={3}>
-                            <Card className='shadow bg-body-tertiary rounded'>
+                            <Card className='shadow bg-body-tertiary rounded mb-3'>
                                 <Card.Body>
                                     <Card.Title>Feedback</Card.Title>
                                     <Card.Text>
-                                        <h2>20</h2>
+                                        <span>20</span>
                                     </Card.Text>
                                 </Card.Body>
                                 <Card.Footer>

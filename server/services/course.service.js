@@ -161,6 +161,7 @@ const create = async (courseCreateDto) => {
     }
 
     try {
+        console.log(courseCreateDto);
         const createdCourse = await Course.create({
             title: courseCreateDto.title,
             meta_description: courseCreateDto.metaDescription,
@@ -346,6 +347,7 @@ function generateCourseViewDto(array) {
         dto.detailedDescription = course.detailed_description;
         dto.createdAt = course.createdAt;
         dto.updatedAt = course.updatedAt;
+        dto.status = course.status;
         return dto;
     });
     return dtoArray;

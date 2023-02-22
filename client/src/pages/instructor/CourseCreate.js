@@ -14,8 +14,6 @@ const CourseCreate = () => {
 	const [categories, setCategories] = useState([]);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const formData = new FormData();
-	formData.append('courseImage', file)
 
 	useEffect(() => {
 		Axios.get('/instructor/categories').then((categories) => {
@@ -24,29 +22,27 @@ const CourseCreate = () => {
 	}, [])
 
 	async function createCourse(data) {
+		const formData = new FormData();
+		formData.append('courseImage', file)
+		formData.append('title', data.title);
+		formData.append('metaDescription', data.metaDescription);
+		formData.append('price', data.price);
+		formData.append('level', data.level);
+		formData.append('category', data.category);
+		formData.append('language', data.language);
+		formData.append('detailedDescription', data.detailedDescription)
+
 		setLoading(true);
 		try {
 			await Axios.post(
 				'/instructor/courses',
-				{
-					title: data.title,
-					metaDescription: data.metaDescription,
-					level: data.level,
-					category: data.category,
-					price: data.price,
-					language: data.language,
-					detailedDescription: data.detailedDescription,
-					formData
-				}, {
-				headers: {
-					'Content-Type': 'multipart/form-data'
-				}
-			}
+				formData
 			);
 			handleShow();
 		} catch (err) {
 			const error = err.response.data.errors;
-			setError(error.Email);
+			setError(err.response.data.errors.Error);
+			console.log(error.Error);
 		}
 		setLoading(false);
 	}
@@ -62,7 +58,7 @@ const CourseCreate = () => {
 			.number().integer().positive()
 			.required('Level cannot be empty*'),
 		category: yup
-			.number().integer().positive()
+			.number().integer().positive('Choose category')
 			.required('Category cannot be empty*'),
 		price: yup
 			.number()
@@ -93,8 +89,8 @@ const CourseCreate = () => {
 				</Modal.Header>
 				<Modal.Body>Course will be available to public after approval of admin.</Modal.Body>
 				<Modal.Footer>
-					<Button variant="success" onClick={handleClose}>
-						Login
+					<Button variant="primary" onClick={handleClose}>
+						Close
 					</Button>
 				</Modal.Footer>
 			</Modal>
@@ -108,7 +104,7 @@ const CourseCreate = () => {
 				<div className="p-4">
 					<div className="row">
 						<div className="offset-lg-3 col-lg-6">
-							<form className="container" onSubmit={handleSubmit(createCourse)}>
+							<form className="container" encType="multipart/form-data" onSubmit={handleSubmit(createCourse)}>
 								<div className="card" style={{ "textAlign": "left" }}>
 									<div className="card-body">
 										<div className="row">
@@ -154,7 +150,7 @@ const CourseCreate = () => {
 												<div className="form-group">
 													<label>Category</label>
 													<select className="form-control" {...register('category')}>
-														<option value={null}>Choose category</option>
+														<option value={0}>Choose category</option>
 														{
 															categories.map((category) => {
 																return (<option key={category.id} value={category.id}>{category.category}</option>);
@@ -182,7 +178,12 @@ const CourseCreate = () => {
 											<div className="col-lg-12 mb-3">
 												<div className="form-group">
 													<label>Language</label>
-													<input type='text' className="form-control" {...register('language')}></input>
+													<select className="form-control" {...register('language')}>
+														<option value='English'>English</option>
+														<option value='Malayalam'>Malayalam</option>
+														<option value='Hindi'>Hindi</option>
+														<option value='Tamil'>Tamil</option>
+													</select>
 													{errors.language ? (
 														<span className='text-danger'>
 															{errors.language.message}

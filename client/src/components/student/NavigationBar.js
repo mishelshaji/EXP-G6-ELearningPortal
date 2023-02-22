@@ -5,6 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo.png";
+import LogoutButton from "../LogoutButton";
 
 export default function NavigationBar() {
   return (
@@ -23,7 +24,7 @@ export default function NavigationBar() {
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto me-3">
             <Link to="/student/enrolled-courses" className="nav-link">
               My Courses
             </Link>
@@ -38,10 +39,10 @@ export default function NavigationBar() {
                   My Transactions
                 </Link>
               </NavDropdown.Item>
-              <NavDropdown.Item>
-                <Link to="/student/logout" className="nav-link">
-                  Log out
-                </Link>
+              <NavDropdown.Item className="btn">
+                <div className="d-grid logout-button">
+                  <LogoutButton />
+                </div>
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import Axios from "../services/axios";
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +16,7 @@ const Login = () => {
     async function login(data) {
         setLoading(true);
         try {
-            const result = await axios.post('http://localhost:80/login', {
+            const result = await Axios.post('/login', {
                 email: data.username,
                 password: data.password
             });

@@ -21,6 +21,8 @@ import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CourseContent from './pages/instructor/CourseContent';
+import RequestTable from './components/admin/RequestTable';
+import UnauthorizedAccessPage from './components/UnauthorizedAccessPage';
 
 const routes = createBrowserRouter([
     {
@@ -29,7 +31,7 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '',
-                element: <Home page='landing'/>
+                element: <Home page='landing' />
             },
             {
                 path: 'search/:q',
@@ -52,10 +54,11 @@ const routes = createBrowserRouter([
     {
         path: 'student',
         element: <StudentLayout />,
+        errorElement: <UnauthorizedAccessPage />,
         children: [
             {
                 path: '',
-                element: <Home page='student-home'/>
+                element: <Home page='student-home' />
             },
             {
                 path: 'search/:q',
@@ -86,6 +89,7 @@ const routes = createBrowserRouter([
     {
         path: 'instructor',
         element: <InstructorLayout />,
+        errorElement: <UnauthorizedAccessPage />,
         children: [
             {
                 path: '',
@@ -93,7 +97,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: 'profile',
-                element: <InstructorProfile/>
+                element: <InstructorProfile />
             },
             {
                 path: 'feedback-list',
@@ -109,13 +113,14 @@ const routes = createBrowserRouter([
             },
             {
                 path: 'course-content',
-                element: <CourseContent/>
+                element: <CourseContent />
             }
         ]
     },
     {
         path: 'admin',
         element: <AdminLayout />,
+        errorElement: <UnauthorizedAccessPage />,
         children: [
             {
                 path: '',
@@ -124,6 +129,10 @@ const routes = createBrowserRouter([
             {
                 path: 'user-management',
                 element: <UserManagement />
+            },
+            {
+                path: 'requests',
+                element: <RequestTable />
             }
         ]
     }
