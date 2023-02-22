@@ -1,85 +1,111 @@
-import React from 'react';
-import { Container, Card, Button, Table } from 'react-bootstrap';
-import videoImage from '../images/code.jpg';
+import React, { useEffect, useState } from 'react';
+import { Container, Card, Table } from 'react-bootstrap';
 import backgroundImage from '../images/cover.jpg';
+import Axios from '../services/axios';
+import { Link } from 'react-router-dom';
 
 const ViewCourseDetails = () => {
-  const title = "JavaScript : Understanding the Weird Parts";
-  const description = "An advanced JavaScript course for everyone!Scope, closures, prototypes,'this' , build your own framework, and more. ";
-  const lecturer = "Vamshi Nadela";
-  const language = "English";
-  const CreatedAt = "2022-11-30";
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const courseId = urlParams.get('c');
+    const [course, setCourse] = useState([]);
+    const [contents, setContents] = useState([]);
+    const [error, setError] = useState('');
 
-  const styles = {
-    backgroundImage: `url(${backgroundImage})`,
-    videoImage: `url(${videoImage})`,
-    backgroundSize: 'cover',
-    height: '45vh',
-    color: 'white',
-    padding: '50px'
-  };
+    useEffect(() => {
+        (async function fetchCourses() {
+            try {
+                const allCourses = await Axios.get(`/courses/${courseId}`);
+                setCourse(allCourses.data[0]);
+                const courseContents = await Axios.get(
+                    `/courses/contents/${courseId}`
+                );
+                setContents(courseContents.data);
+            } catch (err) {
+                const error = err.response.data;
+                if (!error) {
+                    setError('No course found');
+                }
+                if (error.errors.Error) {
+                    setError(error.errors.Error);
+                }
+            }
+        })();
+    }, [courseId]);
 
-  const courseContents = [
-    { name: "Introduction to React", duration: "5 mins" },
-    { name: "Setting up File", duration: "4 mins" },
-    { name: "Create Variable", duration: "8 mins" },
-  ];
+    const styles = {
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        height: '45vh',
+        color: 'white',
+        padding: '50px'
+    };
 
-  const javascriptDescription = `JavaScript is a high-level, dynamic, and interpreted programming language that is widely used for creating interactive web pages and web applications. 
-                                 It is a client-side scripting language that runs in web browsers and is used for creating dynamic and responsive user interfaces. 
-                                 JavaScript can also be used for server-side programming with platforms such as Node.js. 
-                                 It has become one of the most popular programming languages in the world due to its flexibility, ease of use, and extensive community support.`;
-  const titleStyles = {
-    fontWeight: 'bold',
-  };
+    const titleStyles = {
+        fontWeight: 'bold'
+    };
 
-  return (
-    <Container fluid style={styles}>
-      <div className='d-block'>
-        <h1 style={titleStyles}>{title}</h1>
-        <p>{description}</p>
-        <p>Lecturer : {lecturer}</p>
-        <p>Created At : {CreatedAt}</p>
-        <p>Language : {language}</p>
-      </div>
-      <div className='d-flex justify-content-between'>
-        <Table striped bordered hover variant="light" className='mt-5 me-5'>
-          <thead>
-            <tr>
-              <th>Chapter Name</th>
-              <th>Duration</th>
-            </tr>
-          </thead>
-          <tbody>
-            {courseContents.map((content, index) => (
-              <tr key={index}>
-                <td>{content.name}</td>
-                <td>{content.duration}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <Card style={{ width: '18rem', marginRight: '2rem', marginTop: '-100px' }}>
-          <Card.Img variant="top" src={videoImage} />
-          <Card.Body>
-            <Card.Title style={{ color: 'black' }}>Java</Card.Title>
-            <Card.Text style={{ color: 'black' }}>
-              This is an example video description.
-            </Card.Text>
-            <Card.Text style={{ color: 'red' }}>
-              $60
-            </Card.Text>
-            <div className="mt-auto">
-              <Button variant="primary">Buy Now</Button>
+    return (
+        <Container fluid style={styles}>
+            <div className='d-block'>
+                <h1 style={titleStyles}>{course.title}</h1>
+                <p>{course.metaDescription}</p>
+                {/* <p>Created At : {(course.createdAt).slice(0, 10)}</p> */}
+                <p>Language : {course.language}</p>
             </div>
-          </Card.Body>
-        </Card>
-      </div>
-      <h2 style={{ color: 'black', titleStyles }}>JavaScript</h2>
-      <p style={{ color: 'black' }}>{javascriptDescription}</p>
-      <br></br>
-    </Container>
-  );
+            <div className='d-flex justify-content-between'>
+                <Table
+                    striped
+                    bordered
+                    hover
+                    variant='light'
+                    className='mt-5 me-5'
+                >
+                    <thead>
+                        <tr>
+                            <th>Chapter Name</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {contents.map((content, index) => (
+                            <tr key={index}>
+                                <td>{content.title}</td>
+                                <td>{content.duration}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+                {error ? <span>{error}</span> : ''}
+                <Card
+                    style={{
+                        width: '18rem',
+                        marginRight: '2rem',
+                        marginTop: '-100px'
+                    }}
+                >
+                    <Card.Img variant='top' src={`http://localhost:80/public/${course.featuredImageLink}`} />
+                    <Card.Body>
+                        <Card.Title style={{ color: 'black' }}>{course.title}</Card.Title>
+                        <Card.Text style={{ color: 'black' }}>
+                            {course.metaDescription}
+                        </Card.Text>
+                        <Card.Text style={{ color: 'red' }}>{parseFloat(course.price)}</Card.Text>
+                        <div className='mt-auto'>
+                            <Link
+                                to={'/student/order'}
+                                className='btn btn-primary'
+                            >
+                                Buy Now
+                            </Link>
+                        </div>
+                    </Card.Body>
+                </Card>
+            </div>
+            <p style={{ color: 'black' }}>{course.detailedDescription}</p>
+            <br></br>
+        </Container>
+    );
 };
 
 export default ViewCourseDetails;

@@ -1,7 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import NavigationBar from "../../components/student/NavigationBar";
-import Footer from '../../components/Footer';
 import jwt_decode from 'jwt-decode';
 
 function StudentLayout() {
@@ -18,7 +17,6 @@ function StudentLayout() {
     <>
       <NavigationBar />
       <Outlet></Outlet>
-      <Footer />
     </>
   );
 }

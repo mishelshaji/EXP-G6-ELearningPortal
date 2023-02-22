@@ -13,5 +13,6 @@ router.get('/courses', homeController.getAll);
 router.get('/courses/free', homeController.getAllFree);
 router.get('/courses/:id', homeController.getOne);
 router.get('/courses/search/:q', homeController.getByNameLike);
+router.get('/courses/contents/:id', homeController.getAllByCourse)
 
 module.exports = router;

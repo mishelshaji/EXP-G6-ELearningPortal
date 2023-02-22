@@ -4,11 +4,11 @@ import CourseCard from '../components/CourseCard';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Axios from "../services/axios";
 
 export default function Home(params) {
-  
+
   const [courses, setCourses] = useState([]);
   const [allFree, setFreeCourses] = useState([]);
   const [error, setError] = useState('');
@@ -21,7 +21,7 @@ export default function Home(params) {
         const freeCourses = await Axios.get('/courses/free')
         setFreeCourses(freeCourses.data);
       } catch (err) {
-        const error = err.response.data;
+        const error = err.response;
         if (!error) {
           setError('No course found');
         }
@@ -37,7 +37,15 @@ export default function Home(params) {
     courseList.forEach((i, index) => {
       result.push(
         <Col key={index} md={6} lg={4} className='mb-4'>
-          <CourseCard {...i} page={params.page} />
+          {(params.page === 'student-home') ?
+            <Link to={`student/course-content/?c=${i.id}`} className='text-decoration-none text-dark'>
+              <CourseCard {...i} page={params.page} />
+            </Link>
+            :
+            <Link to={`/course-content/?c=${i.id}`} className='text-decoration-none text-dark'>
+              <CourseCard {...i} page={params.page} />
+            </Link>
+          }
         </Col>
       );
     });
@@ -48,10 +56,10 @@ export default function Home(params) {
 
   function searchCourse(data) {
     if (params.page === 'landing') {
-      let path = `/search/${data.searchKey}`;
+      let path = `/search/?key=${data.searchKey}`;
       navigate(path);
     } else {
-      let path = `/student/search/${data.searchKey}`;
+      let path = `/student/search/?key=${data.searchKey}`;
       navigate(path);
     }
   }

@@ -1,4 +1,5 @@
 const service = require('../../../services/course.service');
+const contentService = require('../../../services/course-content.service');
 
 const getAll = async (req, res) => {
     const result = await service.getAllActive();
@@ -46,9 +47,22 @@ const getByNameLike = async (req, res) => {
     }
 }
 
+const getAllByCourse = async (req, res) => {
+    const courseId = req.params.id;
+    const result = await contentService.getAllByCourseId(courseId);
+    if (result.result) {
+        return res.status(200).json(result.result.courseContents);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
+}
+
 module.exports = {
     getAll,
     getAllFree,
     getOne,
-    getByNameLike
+    getByNameLike,
+    getAllByCourse
 }
