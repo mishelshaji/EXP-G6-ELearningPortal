@@ -21,7 +21,7 @@ const getAllByCourseId = async (id) => {
         response.result = { courseContents };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -41,7 +41,7 @@ const getOne = async (id) => {
         response.result = { courseContent: dto };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -61,7 +61,7 @@ const create = async (courseContentCreateDTO) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -78,7 +78,7 @@ const create = async (courseContentCreateDTO) => {
         response.result = { courseContent };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -95,7 +95,7 @@ const update = async (id, courseContentUpdateDto) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -103,7 +103,7 @@ const update = async (id, courseContentUpdateDto) => {
         const isContentExist = await CourseContent.findByPk(id);
 
         if (!isContentExist) {
-            response.addError('Course-Content', 'Course content not found');
+            response.addError('Error', 'Course content not found');
             return response;
         }
 
@@ -119,7 +119,7 @@ const update = async (id, courseContentUpdateDto) => {
         response.result = { courseContentUpdateStatus: courseContentUpdate[0] };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -130,7 +130,7 @@ const remove = async (id) => {
         const content = await CourseContent.findByPk(id);
 
         if (!content) {
-            response.addError('Content', 'Content not found');
+            response.addError('Error', 'Content not found');
             return response;
         }
         
@@ -139,7 +139,7 @@ const remove = async (id) => {
         response.result = { courseContentDeletionStatus: contentDelete };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }

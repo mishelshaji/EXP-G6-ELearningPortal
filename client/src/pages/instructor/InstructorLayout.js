@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Navigate, Outlet } from 'react-router-dom';
-import Footer from '../../components/Footer';
 import Header from '../../components/instructor/Header';
 import SideNavigationBar from '../../components/instructor/SideNavigationBar';
 import jwt_decode from 'jwt-decode';
@@ -27,7 +26,6 @@ function InstructorLayout() {
 					<Outlet></Outlet>
 				</Row>
 			</Container>
-			<Footer />
 		</>
 	);
 }

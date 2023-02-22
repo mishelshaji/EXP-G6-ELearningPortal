@@ -19,14 +19,6 @@ function SideNavigationBar() {
                     <Link
                         className='nav-link text-white'
                     >
-                        <i className='fas fa-user-alt'></i>
-                        <span className='ms-2'>My profile</span>
-                    </Link>
-                </li>
-                <li className='nav-item '>
-                    <Link
-                        className='nav-link text-white'
-                    >
                     </Link>
                 </li>
                 <li className='nav-item '>

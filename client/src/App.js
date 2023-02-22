@@ -5,7 +5,7 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import ViewCourseDetails from './pages/student/CourseView';
+import ViewCourseDetails from './pages/CourseView';
 import Login from './pages/Login';
 import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
@@ -23,8 +23,14 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import CourseContent from './pages/instructor/CourseContent';
 import RequestTable from './components/admin/RequestTable';
 import UnauthorizedAccessPage from './components/UnauthorizedAccessPage';
+import NotFound from './components/NotFound';
+import Course from './pages/instructor/Course';
 
 const routes = createBrowserRouter([
+    {
+        path: '*',
+        element: <NotFound />,
+    },
     {
         path: '/',
         element: <UserLayout />,
@@ -48,6 +54,10 @@ const routes = createBrowserRouter([
             {
                 path: 'instructor/registration',
                 element: <InstructorRegistration />
+            },
+            {
+                path: 'course-content',
+                element: <ViewCourseDetails />
             }
         ]
     },
@@ -81,7 +91,7 @@ const routes = createBrowserRouter([
                 element: <CourseViewer />
             },
             {
-                path: 'courses',
+                path: 'course-content',
                 element: <ViewCourseDetails />
             }
         ]
@@ -112,8 +122,12 @@ const routes = createBrowserRouter([
                 element: <CourseCreate />
             },
             {
-                path: 'course-content',
+                path: 'content',
                 element: <CourseContent />
+            },
+            {
+                path: 'course',
+                element: <Course />
             }
         ]
     },

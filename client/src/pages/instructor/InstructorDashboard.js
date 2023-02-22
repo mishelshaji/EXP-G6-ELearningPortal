@@ -5,10 +5,10 @@ import Axios from "../../services/axios"
 
 function InstructorDashboard() {
     useEffect(() => {
-		Axios.get('/instructor/categories').then((res) => {
-			
-		});
-	}, [])
+        Axios.get('/instructor/categories').then((res) => {
+
+        });
+    }, [])
 
     return (
         <>
@@ -27,21 +27,6 @@ function InstructorDashboard() {
                                     <Link to={'/instructor/courses'} className='btn btn-primary'>
                                         View Courses
                                     </Link>
-                                </Card.Footer>
-                            </Card>
-                        </Col>
-                        <Col md={3}>
-                            <Card className='shadow bg-body-tertiary rounded mb-3'>
-                                <Card.Body>
-                                    <Card.Title>Students</Card.Title>
-                                    <Card.Text>
-                                        <span>200</span>
-                                    </Card.Text>
-                                </Card.Body>
-                                <Card.Footer>
-                                    <Button variant='primary'>
-                                        View Students
-                                    </Button>
                                 </Card.Footer>
                             </Card>
                         </Col>
@@ -74,58 +59,32 @@ function InstructorDashboard() {
                             </Card>
                         </Col>
                     </Row>
-                    <p className='mt-5 fs-4'>Popular Courses</p>
+                    <p className='mt-5 fs-4'>Courses</p>
                     <Table striped hover responsive>
                         <thead className='bg-dark text-white'>
                             <tr>
-                                <th>SI.No</th>
+                                <th>Course Id</th>
                                 <th>Course</th>
                                 <th>No. of Contents</th>
-                                <th>No. of Students Enrolled</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>React for Beginners</td>
+                                <td>
+                                    <Link className='text-dark text-decoration-none' to={'/instructor/course/?id=1'}>
+                                        React for Beginners
+                                    </Link>
+                                </td>
                                 <td>12</td>
-                                <td>100</td>
                                 <td>2022-02-01</td>
                                 <td>2022-02-10</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Node.js Essentials</td>
-                                <td>8</td>
-                                <td>150</td>
-                                <td>2022-01-01</td>
-                                <td>2022-01-31</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Python Fundamentals</td>
-                                <td>15</td>
-                                <td>150</td>
-                                <td>2022-02-01</td>
-                                <td>2022-02-10</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Python Fundamentals</td>
-                                <td>15</td>
-                                <td>150</td>
-                                <td>2022-02-01</td>
-                                <td>2022-02-10</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Python Fundamentals</td>
-                                <td>15</td>
-                                <td>150</td>
-                                <td>2022-02-01</td>
-                                <td>2022-02-10</td>
+                                <td>
+                                    <Link className='btn btn-secondary' to={`/instructor/content/${1}`}>Add Contents</Link>
+                                </td>
                             </tr>
                         </tbody>
                     </Table>

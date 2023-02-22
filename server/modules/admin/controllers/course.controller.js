@@ -11,8 +11,8 @@ const getAllActive = async (req, res) => {
     }
 }
 
-const getAllInActive = async (req, res) => {
-    const result = await service.getAllInActive();
+const getAllRequests = async (req, res) => {
+    const result = await service.getAllRequests();
     if (result.result) {
         return res.status(200).json(result.result.courses);
     } else if (!result.isValid) {
@@ -88,7 +88,7 @@ const updatePrice = async (req, res) => {
 
 module.exports = {
     getAllActive,
-    getAllInActive,
+    getAllRequests,
     getAllDeleted,
     getOne,
     remove,

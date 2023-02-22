@@ -12,6 +12,7 @@ router.get('/courses/:id', courseController.getOne);
 router.post('/courses', upload.single('courseImage'), courseController.create);
 router.put('/courses/:id', courseController.update);
 router.delete('/courses/:id', courseController.remove);
+router.put('/courses/status/:id', courseController.updateStatus);
 
 router.get('/course/contents/:id', courseContentController.getAllByCourse);
 router.post('/course/contents', courseContentController.create);

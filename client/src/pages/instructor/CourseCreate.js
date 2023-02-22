@@ -4,15 +4,20 @@ import Axios from "../../services/axios";
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Modal, Spinner, Button, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const CourseCreate = () => {
 
+	const navigate = useNavigate();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);
 	const [categories, setCategories] = useState([]);
-	const handleClose = () => setShow(false);
+	const handleClose = () => {
+		setShow(false);
+		navigate('/instructor/content');
+	}
 	const handleShow = () => setShow(true);
 
 	useEffect(() => {
@@ -40,9 +45,9 @@ const CourseCreate = () => {
 			);
 			handleShow();
 		} catch (err) {
-			const error = err.response.data.errors;
-			setError(err.response.data.errors.Error);
-			console.log(error.Error);
+			const error = err.response.data;
+			setError(err.response.data.errors);
+			console.log(error);
 		}
 		setLoading(false);
 	}
@@ -85,12 +90,12 @@ const CourseCreate = () => {
 		<Col sm={9} md={10} className='mx-auto mt-4'>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header>
-					<Modal.Title>Course creation request sent.</Modal.Title>
+					<Modal.Title>Course saved.</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Course will be available to public after approval of admin.</Modal.Body>
+				<Modal.Body>Add course contents</Modal.Body>
 				<Modal.Footer>
 					<Button variant="primary" onClick={handleClose}>
-						Close
+						Add contents
 					</Button>
 				</Modal.Footer>
 			</Modal>
@@ -221,7 +226,7 @@ const CourseCreate = () => {
 															<span className='visually-hidden'>Loading...</span>
 														</Spinner>
 													)}
-													Submit
+													Save
 												</button>
 											</div>
 										</div>
