@@ -23,7 +23,7 @@ const enroll = async (req, res) => {
 }
 
 const getEnrolledCoursesByUserId = async (req, res) => {
-    const userId = 8;
+    const userId = req.user.id;
     const enrolledCourses = await service.getEnrolledCoursesByUserId(userId);
 
     if (enrolledCourses.result) {
