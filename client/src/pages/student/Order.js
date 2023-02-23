@@ -33,7 +33,6 @@ export default function Order() {
             setLoading(true);
             try {
                 const response = await Axios.post(`/student/enrollments/${courseId}/${status}`);
-				const paymentEntry = 
                 handleShow();
             } catch (err) {
                 const error = err.response.data;
@@ -50,7 +49,7 @@ export default function Order() {
                     <Modal.Title>Enrollment success</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    Dear [customer name], we know the world is full of choices.
+                    Hi customer, we know the world is full of choices.
                     Thank you for choosing us! We appreciate it.
                 </Modal.Body>
                 <Modal.Footer>
