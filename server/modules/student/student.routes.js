@@ -3,7 +3,7 @@ const enrollmentController = require('./controllers/enrollment.controller');
 
 const router = express.Router();
 
-router.post('/enrollments/:id/:status', enrollmentController.enroll);
+router.post('/enrollments', enrollmentController.enroll);
 router.get('/enrollments', enrollmentController.getEnrolledCoursesByUserId);
 
 module.exports = router;

@@ -23,6 +23,7 @@ export default function CourseContent() {
     const [contents, setContents] = useState([]);
 
     useEffect(() => {
+        setError('');
         Axios.get(`instructor/course/contents/${courseId}`)
             .then((contents) => {
                 setContents(contents.data);

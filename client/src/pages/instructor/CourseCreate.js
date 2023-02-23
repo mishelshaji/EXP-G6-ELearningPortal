@@ -16,7 +16,7 @@ const CourseCreate = () => {
 	const [categories, setCategories] = useState([]);
 	const handleClose = () => {
 		setShow(false);
-		navigate('/instructor/content');
+		navigate('/instructor/courses');
 	}
 	const handleShow = () => setShow(true);
 
@@ -65,6 +65,9 @@ const CourseCreate = () => {
 			.required('Category cannot be empty*'),
 		price: yup
 			.number()
+			.positive()
+			.integer()
+			.min(0)
 			.required('Price cannot be empty*')
 			.typeError('Enter a valid amount')
 			.test('is-number', 'Enter a valid amount', (value) => !isNaN(value)),
@@ -88,12 +91,12 @@ const CourseCreate = () => {
 		<Col sm={9} md={10} className='mx-auto mt-4'>
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header>
-					<Modal.Title>Course saved.</Modal.Title>
+					<Modal.Title>Course successfully saved.</Modal.Title>
 				</Modal.Header>
-				<Modal.Body>Add course contents</Modal.Body>
+				<Modal.Body>Add course contents and send request to admin for course approval.</Modal.Body>
 				<Modal.Footer>
 					<Button variant="primary" onClick={handleClose}>
-						Add contents
+						Close
 					</Button>
 				</Modal.Footer>
 			</Modal>

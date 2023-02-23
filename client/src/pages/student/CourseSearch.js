@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import CourseCard from '../../components/CourseCard';
 import SearchBox from '../../components/SearchBox';
 import Axios from "../../services/axios";
@@ -9,7 +10,9 @@ function displayAllCourses(courseList) {
     courseList.map((i, index) => {
       return (
         <Col key={index} md={3} lg={3} className="mb-4">
-          <CourseCard {...i} width="15rem" />
+          <Link to={`/course-content/?c=${i.id}`} className='text-decoration-none text-dark'>
+            <CourseCard {...i} width="15rem" />
+          </Link>
         </Col>
       )
     })

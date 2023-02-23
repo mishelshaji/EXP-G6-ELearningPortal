@@ -12,6 +12,7 @@ export default function Order() {
     const [show, setShow] = useState(false);
     const handleClose = () => {
         setShow(false);
+        navigate('/student/enrolled-courses');
     };
     const handleShow = () => setShow(true);
     let levelText;
@@ -27,19 +28,25 @@ export default function Order() {
     }
 
     async function courseEnrollment() {
+        setLoading(true);
+        let status = 0;
+
         if (paymentMethod === 'Free') {
-            const status = 1;
-            const courseId = propsData.id;
-            setLoading(true);
-            try {
-                const response = await Axios.post(`/student/enrollments/${courseId}/${status}`);
-                handleShow();
-            } catch (err) {
-                const error = err.response.data;
-				alert('User already enrolled in this course')
-            }
-            setLoading(false);
+            status = 1;
         }
+
+        try {
+            await Axios.post(`/student/enrollments`,{
+                paymentMethod: paymentMethod,
+                amount: propsData.price,
+                courseId: propsData.id,
+                status: status
+        });
+            handleShow();
+        } catch (err) {
+            alert(err.response.statusText);
+        }
+        setLoading(false);
     }
 
     return (
@@ -98,7 +105,7 @@ export default function Order() {
                                     value={paymentMethod}
                                 >
                                     {parseFloat(propsData.price) === 0 ? (
-                                        <option value='Free' selected={true}>
+                                        <option value='Free' selected>
                                             None
                                         </option>
                                     ) : (

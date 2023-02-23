@@ -47,6 +47,7 @@ const getOne = async (id) => {
 }
 
 const create = async (courseContentCreateDTO) => {
+    console.log(courseContentCreateDTO);
     const response = new ServiceResponse();
     const courseContentSchema = joi.object({
         title: joi.string().required(),
