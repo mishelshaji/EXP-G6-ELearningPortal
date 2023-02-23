@@ -2,8 +2,12 @@ const service = require('../../../services/enrollment.service');
 
 const enroll = async (req, res) => {
     const courseId = req.params.id;
-    const userId = 8;
-    const enrollment = await service.enroll(userId, courseId);
+    let status = req.params.status;
+    if (!status) {
+        status = 0;
+    }
+    const userId = req.user.id;
+    const enrollment = await service.enroll(userId, courseId, status);
 
     if (enrollment.result) {
         return res.status(200).json(enrollment.result.enrollment);

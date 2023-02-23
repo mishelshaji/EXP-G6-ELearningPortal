@@ -38,7 +38,7 @@ export default function Home(params) {
       result.push(
         <Col key={index} md={6} lg={4} className='mb-4'>
           {(params.page === 'student-home') ?
-            <Link to={`student/course-content/?c=${i.id}`} className='text-decoration-none text-dark'>
+            <Link to={`course-content/?c=${i.id}`} className='text-decoration-none text-dark'>
               <CourseCard {...i} page={params.page} />
             </Link>
             :

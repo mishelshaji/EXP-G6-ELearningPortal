@@ -26,8 +26,8 @@ function CourseViewer() {
                     <Card className='mt-3 mb-3'>
                         <Card.Body>
                             <Card.Title>Give Feedback</Card.Title>
-                            <div class="mb-3">
-                                <textarea class="form-control" rows="3"></textarea>
+                            <div className="mb-3">
+                                <textarea className="form-control" rows="3"></textarea>
                                 <button className='btn btn-primary mt-3 float-end'>Submit Feedback</button>
                             </div>
                         </Card.Body>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Container, Card, Table } from 'react-bootstrap';
 import backgroundImage from '../images/cover.jpg';
 import Axios from '../services/axios';
-import { Link } from 'react-router-dom';
 
 const ViewCourseDetails = () => {
     const queryString = window.location.search;
@@ -91,14 +90,6 @@ const ViewCourseDetails = () => {
                             {course.metaDescription}
                         </Card.Text>
                         <Card.Text style={{ color: 'red' }}>{parseFloat(course.price)}</Card.Text>
-                        <div className='mt-auto'>
-                            <Link
-                                to={'/student/order'}
-                                className='btn btn-primary'
-                            >
-                                Buy Now
-                            </Link>
-                        </div>
                     </Card.Body>
                 </Card>
             </div>

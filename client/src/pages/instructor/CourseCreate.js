@@ -45,9 +45,7 @@ const CourseCreate = () => {
 			);
 			handleShow();
 		} catch (err) {
-			const error = err.response.data;
 			setError(err.response.data.errors);
-			console.log(error);
 		}
 		setLoading(false);
 	}

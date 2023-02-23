@@ -4,7 +4,7 @@ const ServiceResponse = require('../utilities/types/service.response');
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../config/db.config');
 
-const enroll = async (userId, courseId) => {
+const enroll = async (userId, courseId, status) => {
     const response = new ServiceResponse();
 
     try {
@@ -17,7 +17,8 @@ const enroll = async (userId, courseId) => {
 
         const enrollment = await UserCourseEnrollment.create({
             user_id: userId,
-            course_id: courseId
+            course_id: courseId,
+            status: status
         });
         const dto = new EnrollmentViewDTO();
         dto.id = enrollment.id;
@@ -77,7 +78,6 @@ const getEnrolledCoursesByUserId = async (userId) => {
         response.result = { enrolledCourses };
         return response;
     } catch (err) {
-        console.log(err);
         response.addError('Error', err);
         return response;
     }
