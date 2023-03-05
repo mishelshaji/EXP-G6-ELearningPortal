@@ -41,7 +41,7 @@ const Course = sequelize.define('course', {
     },
 
     detailed_description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false
     },
 

@@ -1,14 +1,14 @@
 const UserCourseEnrollment = require('../models/userCourseEnrollment');
-const EnrollmentViewDTO = require('../dtos/enrollment-view.dto');
 const ServiceResponse = require('../utilities/types/service.response');
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../config/db.config');
+const paymentService = require('./payment.service');
 
-const enroll = async (userId, courseId) => {
+const enroll = async (userId, data) => {
     const response = new ServiceResponse();
 
     try {
-        const alreadyEnrolled = await isEnrolled(userId, courseId);
+        const alreadyEnrolled = await isEnrolled(userId, data.courseId);
 
         if (alreadyEnrolled === 1) {
             response.addError('Error', 'Student is already enrolled in this course');
@@ -17,16 +17,23 @@ const enroll = async (userId, courseId) => {
 
         const enrollment = await UserCourseEnrollment.create({
             user_id: userId,
-            course_id: courseId
+            course_id: data.courseId,
+            status: data.status
         });
-        const dto = new EnrollmentViewDTO();
-        dto.id = enrollment.id;
-        dto.status = enrollment.status;
-        dto.courseCompletionStatus = enrollment.course_completion_status;
-        dto.createdAt = enrollment.createdAt;
-        dto.updatedAt = enrollment.updatedAt;
-        response.result = { enrollment: dto };
-        return response;
+        const paymentDetails = {
+            paymentMethod: data.paymentMethod,
+            amount: data.amount,
+            userId: userId,
+            courseId: data.courseId,
+            enrollId: enrollment.id,
+            status: 1
+        }
+        const payment = await paymentService.create(paymentDetails)
+
+        if (payment) {
+            response.result = {enrollment, payment};
+            return response;
+        }
     } catch (err) {
         response.addError('Error', err);
         return response;
@@ -77,7 +84,6 @@ const getEnrolledCoursesByUserId = async (userId) => {
         response.result = { enrolledCourses };
         return response;
     } catch (err) {
-        console.log(err);
         response.addError('Error', err);
         return response;
     }

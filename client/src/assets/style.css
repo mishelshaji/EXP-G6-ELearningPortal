@@ -79,6 +79,13 @@
     font-family: 'Rubik', sans-serif;
 }
 
+.unauthorized-access-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 500px) {
     #logo {
         width: 150px;
@@ -95,7 +102,17 @@
     background-image: url('../images/bgimg.jpg');
 }
 
-#show-content{
+#show-content {
     display: flex;
     flex-direction: column;
+}
+
+.logout-button button{
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 0, 0, 0.655);
+}
+
+.logout-button button:hover{
+    background-color: rgb(255, 0, 0);
 }

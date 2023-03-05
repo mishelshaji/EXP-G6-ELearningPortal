@@ -11,9 +11,10 @@ const { authenticationMiddleware } = require('./middleware/auth.middleware');
 const app = express();
 
 app.use(cors());
+app.use('/public', express.static('public'))
 app.use(express.json());
-app.use(authenticationMiddleware);
 app.use('/', userRoutes);
+app.use(authenticationMiddleware);
 app.use('/instructor', instructorRoutes);
 app.use('/admin', adminRoutes);
 app.use('/student', studentRoutes);

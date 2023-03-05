@@ -5,7 +5,7 @@ import StudentLayout from './pages/student/StudentLayout';
 import AdminLayout from './pages/admin/AdminLayout';
 import UserLayout from './pages/UserLayout';
 import CourseSearch from './pages/student/CourseSearch';
-import ViewCourseDetails from './pages/student/CourseView';
+import ViewCourseDetails from './pages/CourseView';
 import Login from './pages/Login';
 import CourseCreate from './pages/instructor/CourseCreate';
 import StudentProfile from './pages/student/StudentProfile';
@@ -21,18 +21,26 @@ import FeedbackList from './pages/instructor/FeedbackList';
 import CourseList from './pages/instructor/CourseList';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CourseContent from './pages/instructor/CourseContent';
+import RequestTable from './components/admin/RequestTable';
+import UnauthorizedAccessPage from './components/UnauthorizedAccessPage';
+import NotFound from './components/NotFound';
+import Course from './pages/instructor/Course';
 
 const routes = createBrowserRouter([
+    {
+        path: '*',
+        element: <NotFound />,
+    },
     {
         path: '/',
         element: <UserLayout />,
         children: [
             {
                 path: '',
-                element: <Home page='landing'/>
+                element: <Home page='landing' />
             },
             {
-                path: 'search/:q',
+                path: 'search',
                 element: <CourseSearch />
             },
             {
@@ -46,19 +54,24 @@ const routes = createBrowserRouter([
             {
                 path: 'instructor/registration',
                 element: <InstructorRegistration />
+            },
+            {
+                path: 'course-content',
+                element: <ViewCourseDetails />
             }
         ]
     },
     {
         path: 'student',
         element: <StudentLayout />,
+        errorElement: <UnauthorizedAccessPage />,
         children: [
             {
                 path: '',
-                element: <Home page='student-home'/>
+                element: <Home page='student-home' />
             },
             {
-                path: 'search/:q',
+                path: 'search',
                 element: <CourseSearch />
             },
             {
@@ -78,7 +91,7 @@ const routes = createBrowserRouter([
                 element: <CourseViewer />
             },
             {
-                path: 'courses',
+                path: 'course-content',
                 element: <ViewCourseDetails />
             }
         ]
@@ -86,6 +99,7 @@ const routes = createBrowserRouter([
     {
         path: 'instructor',
         element: <InstructorLayout />,
+        errorElement: <UnauthorizedAccessPage />,
         children: [
             {
                 path: '',
@@ -93,7 +107,7 @@ const routes = createBrowserRouter([
             },
             {
                 path: 'profile',
-                element: <InstructorProfile/>
+                element: <InstructorProfile />
             },
             {
                 path: 'feedback-list',
@@ -108,14 +122,19 @@ const routes = createBrowserRouter([
                 element: <CourseCreate />
             },
             {
-                path: 'course-content',
-                element: <CourseContent/>
+                path: 'content',
+                element: <CourseContent />
+            },
+            {
+                path: 'course',
+                element: <Course />
             }
         ]
     },
     {
         path: 'admin',
         element: <AdminLayout />,
+        errorElement: <UnauthorizedAccessPage />,
         children: [
             {
                 path: '',
@@ -124,6 +143,10 @@ const routes = createBrowserRouter([
             {
                 path: 'user-management',
                 element: <UserManagement />
+            },
+            {
+                path: 'requests',
+                element: <RequestTable />
             }
         ]
     }

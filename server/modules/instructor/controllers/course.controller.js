@@ -1,6 +1,7 @@
 const CourseCreateDTO = require('../../../dtos/course-create.dto');
 const CourseUpdateDTO = require('../../../dtos/course-update.dto');
 const service = require('../../../services/course.service');
+const ServiceResponse = require('../../../utilities/types/service.response');
 
 const getAll = async (req, res) => {
     const userId = req.user.id;
@@ -32,13 +33,20 @@ const create = async (req, res) => {
     courseDto.metaDescription = req.body.metaDescription;
     courseDto.level = req.body.level;
     courseDto.price = req.body.price;
-    courseDto.featuredImageLink = req.body.featuredImageLink;
+    courseDto.featuredImageLink = req.file.filename;
     courseDto.language = req.body.language;
     courseDto.detailedDescription = req.body.detailedDescription;
-    courseDto.categoryId = req.body.categoryId;
+    courseDto.categoryId = req.body.category;
     courseDto.userId = req.user.id;
 
+    if (req.fileValidationError) {
+        const response = new ServiceResponse();
+        response.addError('Error', req.fileValidationError);
+        return res.status(400).json(response);
+    }
+
     const result = await service.create(courseDto);
+
     if (result.result) {
         return res.status(200).json(result.result.course);
     } else if (!result.isValid) {
@@ -79,10 +87,25 @@ const remove = async (req, res) => {
     }
 }
 
+const updateStatus = async (req, res) => {
+    const courseId = req.params.id;
+    const status = req.body.status;
+    const result = await service.updateStatus(courseId, status);
+
+    if (result.result) {
+        return res.status(200).json(result.result.courseStatusUpdate);
+    } else if (!result.isValid) {
+        return res.status(400).json(result.errors);
+    } else {
+        return res.status(404).json(result.result);
+    }
+}
+
 module.exports = {
     getAll,
     getOne,
     create,
     update,
-    remove
+    remove,
+    updateStatus
 }

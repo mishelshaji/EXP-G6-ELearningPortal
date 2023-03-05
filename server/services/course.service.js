@@ -22,17 +22,17 @@ const getAllActive = async () => {
         response.result = { courses };
         return response;
     } catch (error) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
 
-const getAllInActive = async () => {
+const getAllRequests = async () => {
     const response = new ServiceResponse();
 
     try {
         const allCourses = await Course.findAll({
-            where: { status: 0 }
+            where: { status: 2 }
         });
 
         if (allCourses.length === 0) {
@@ -44,7 +44,7 @@ const getAllInActive = async () => {
         response.result = { courses };
         return response;
     } catch (error) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -66,7 +66,7 @@ const getAllFree = async () => {
         response.result = { courses };
         return response;
     } catch (error) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -86,7 +86,7 @@ const getOne = async (id) => {
         response.result = { course: dto };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -110,7 +110,7 @@ const getByNameLike = async (courseName) => {
         response.result = { courses };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -132,7 +132,7 @@ const getCourseByUser = async (userId) => {
         response.result = { courses };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -164,13 +164,13 @@ const create = async (courseCreateDto) => {
         const createdCourse = await Course.create({
             title: courseCreateDto.title,
             meta_description: courseCreateDto.metaDescription,
-            level: courseCreateDto.level,
-            price: courseCreateDto.price,
+            level: parseInt(courseCreateDto.level),
+            price: parseFloat(courseCreateDto.price),
             featured_image_link: courseCreateDto.featuredImageLink,
             language: courseCreateDto.language,
             detailed_description: courseCreateDto.detailedDescription,
-            user_id: courseCreateDto.userId,
-            category_id: courseCreateDto.categoryId
+            user_id: parseInt(courseCreateDto.userId),
+            category_id: parseInt(courseCreateDto.categoryId)
         });
 
         const course = generateCourseViewDto([createdCourse]);
@@ -196,7 +196,7 @@ const update = async (courseId, courseUpdateDto) => {
     });
 
     if (error) {
-        response.addError('Validation', error);
+        response.addError('Error', error);
         return response;
     }
 
@@ -222,7 +222,7 @@ const update = async (courseId, courseUpdateDto) => {
         response.result = { courseUpdateStatus: courseUpdate[0] };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -234,7 +234,7 @@ const remove = async (courseId) => {
         const course = await Course.findByPk(courseId);
 
         if (!course) {
-            response.addError('Course', 'Course not found');
+            response.addError('Error', 'Course not found');
             return response;
         }
 
@@ -243,7 +243,7 @@ const remove = async (courseId) => {
         response.result = { courseDeletionStatus: courseDelete[0] };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -255,7 +255,7 @@ const updateStatus = async (courseId, status) => {
         const course = await Course.findByPk(courseId);
 
         if (!course) {
-            response.addError('Course', 'Course not found');
+            response.addError('Error', 'Course not found');
             return response;
         }
 
@@ -264,7 +264,7 @@ const updateStatus = async (courseId, status) => {
         response.result = { courseStatusUpdate: courseStatusUpdate[0] };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -276,7 +276,7 @@ const setPrice = async (courseId, price) => {
         const course = await Course.findByPk(courseId);
 
         if (!course) {
-            response.addError('Course', 'Course not found');
+            response.addError('Error', 'Course not found');
             return response;
         }
 
@@ -285,7 +285,7 @@ const setPrice = async (courseId, price) => {
         response.result = { coursePriceUpdate: coursePriceUpdate[0] };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -307,7 +307,7 @@ const getAllDeleted = async () => {
         response.result = { courses };
         return response;
     } catch (error) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -319,7 +319,7 @@ const removeFromDb = async (courseId) => {
         const course = await Course.findByPk(courseId);
 
         if (!course) {
-            response.addError('Course', 'Course not found');
+            response.addError('Error', 'Course not found');
             return response;
         }
 
@@ -328,7 +328,7 @@ const removeFromDb = async (courseId) => {
         response.result = { courseDeletionStatus: courseDelete };
         return response;
     } catch (err) {
-        response.addError('Database', err);
+        response.addError('Error', err);
         return response;
     }
 }
@@ -346,6 +346,7 @@ function generateCourseViewDto(array) {
         dto.detailedDescription = course.detailed_description;
         dto.createdAt = course.createdAt;
         dto.updatedAt = course.updatedAt;
+        dto.status = course.status;
         return dto;
     });
     return dtoArray;
@@ -353,7 +354,7 @@ function generateCourseViewDto(array) {
 
 module.exports = {
     getAllActive,
-    getAllInActive,
+    getAllRequests,
     getAllFree,
     getOne,
     getByNameLike,
